@@ -1,0 +1,405 @@
+{% extends 'index.html' %} {% block content %}
+<section class="bg-white antialiased dark:bg-gray-900 rounded-lg">
+    <div class="2xl:px-0 rounded-lg">
+
+
+        <div class="lg:flex lg:gap-8 dark:bg-gray-800 p-3 rounded-lg">
+            <div class="w-full space-y-6 rounded-lg lg:max-w-xl xl:max-w-2xl p-4">
+                {% for order in latest_order_delivery %}
+                <div class="p-10 rounded-lg bg-gray-800 relative border border-gray-600 shadow-xl">
+
+                    <!-- Pedido Cabeçalho -->
+                    <div class="flex justify-between items-center p-4 shadow-lg dark:bg-gray-700 rounded-lg">
+                        <div class="flex items-center gap-3">
+                            <svg height="40px" width="40px" version="1.1" id="_x32_" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xhtml" viewBox="0 0 512.00 512.00" xml:space="preserve" fill="#be3c3c" stroke="#be3c3c" stroke-width="0.00512">
+                                <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                                <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+                                <g id="SVGRepo_iconCarrier">
+                                    <style type="text/css">
+                                        .st0{fill:#ffffff;}
+                                    </style>
+                                    <g>
+                                        <path class="st0" d="M476.554,371.269H35.446C15.87,371.269,0,387.138,0,406.716c0,19.577,15.87,35.446,35.446,35.446h441.108 c19.577,0,35.446-15.869,35.446-35.446C512,387.138,496.131,371.269,476.554,371.269z"></path>
+                                        <path class="st0" d="M278.716,133.777c8.1-6.623,13.384-16.561,13.384-27.838c0-19.938-16.161-36.1-36.1-36.1 c-19.938,0-36.1,16.162-36.1,36.1c0,11.277,5.285,21.216,13.384,27.838c-108.954,11.354-193.9,103.47-193.9,215.423h433.231 C472.616,237.247,387.669,145.131,278.716,133.777z M164.908,313.754H94.523c0-70.668,53.2-128.822,121.716-136.823 L164.908,313.754z"></path>
+                                    </g>
+                                </g>
+                            </svg>
+                            <div>
+                                <p class="text-base font-semibold text-gray-900 dark:text-white">Pedido #{{ order.id }}</p>
+                                <p class="text-xs text-gray-500 dark:text-gray-400">Cliente: {{ order.customer_name }}</p>
+                                <p class="text-xs text-gray-500 dark:text-gray-400">Email: {{ order.customer_email }}</p>
+                                <p class="text-xs text-gray-500 dark:text-gray-400">Telefone: {{ order.customer_phone }}</p>
+                            </div>
+                        </div>
+
+                        <!-- Status do Pedido -->
+                        <div>
+                            {% if order.status == 'approved' %}
+                            <span class="bg-green-100 text-green-800 text-xs font-medium px-6 py-0.5 rounded-full dark:bg-green-900 dark:text-green-300">
+                  Aceito
+                </span> {% elif order.status == 'pending' %}
+                            <span class="bg-yellow-100 text-yellow-800 text-xs font-medium px-6 py-0.5 rounded-full dark:bg-yellow-900 dark:text-yellow-300">
+                  Pendente
+                </span> {% elif order.status == 'canceled' %}
+                            <span class="bg-red-100 text-red-800 text-xs font-medium px-6 py-0.5 rounded-full dark:bg-red-900 dark:text-red-300">
+                  Cancelado
+                </span> {% endif %}
+                        </div>
+                    </div>
+                    {% if order.is_local%}
+                        <div class="mt-3">
+                            <span class="bg-red-600 text-xs font-medium px-6 py-0.5 rounded-full dark:bg-red-600 dark:text-white">RETIRADA</span>
+                        </div>
+                    {% else %}
+                    {% endif %}
+
+                    <!-- Detalhes do Pedido -->
+                    {% if order.is_local%}
+                        <div class="mt-2">
+                            <p class="text-xs text-gray-400 dark:text-gray-300 mb-2">
+                                <p class="text-xs text-gray-400 dark:text-gray-300 mb-2">
+                                    Método de Pagamento: {% if order.payment_method == 'PIX' %}
+                                    <span class="text-white bg-red-600 px-3 ms-2 rounded-lg">Pix</span> {% elif order.payment_method == 'CARTAO' %}
+                                    <span class="text-white bg-red-600 px-3 ms-2 rounded-lg">Cartão</span> {% elif order.payment_method == 'DINHEIRO' %}
+                                    <span class="text-white bg-red-600 px-3 ms-2 rounded-lg">Dinheiro</span> {% else %} Não especificado {% endif %}
+                                </p>
+                            </p>
+                            <p class="text-xs text-gray-400 dark:text-gray-300">Data do Pedido: {{ order.order_date|date:"d/m/Y H:i" }}</p>
+                            <p class="text-xs text-gray-400 dark:text-gray-300 mb-2 mt-2">Observação: {{ order.observation }}</p>
+                            <p class="text-sm text-gray-100 dark:text-white text-bold border border-gray-600 rounded-2xl w-60 p-2 mt-2">Pagamento: R$ {{ order.total_order }}</p>
+                        </div>
+                    {% else %}
+                        <div class="mt-2">
+                            <p class="text-xs text-gray-400 dark:text-gray-300 mb-2">Endereço: {{ order.address }}, {{ order.house_number }} {{ order.complement }}</p>
+                            <p class="text-xs text-gray-400 dark:text-gray-300 mb-2">CEP: {{ order.cep }}</p>
+                            <p class="text-xs text-gray-400 dark:text-gray-300 mb-2">
+                                <p class="text-xs text-gray-400 dark:text-gray-300 mb-2">
+                                    Método de Pagamento: {% if order.payment_method == 'PIX' %}
+                                    <span class="text-white bg-red-600 px-3 ms-2 rounded-lg">Pix</span> {% elif order.payment_method == 'CARTAO' %}
+                                    <span class="text-white bg-red-600 px-3 ms-2 rounded-lg">Cartão de Crédito</span> {% elif order.payment_method == 'DINHEIRO' %}
+                                    <span class="text-white bg-red-600 px-3 ms-2 rounded-lg">Dinheiro</span> {% else %} Não especificado {% endif %}
+                                </p>
+                            </p>
+                            <p class="text-xs text-gray-400 dark:text-gray-300">Data do Pedido: {{ order.order_date|date:"d/m/Y H:i" }}</p>
+                            <p class="text-xs text-gray-400 dark:text-gray-300 mb-2 mt-2">Taxa de Entrega: R$ {{ order.frete }}</p>
+                            <p class="text-xs text-gray-400 dark:text-gray-300 mb-2 mt-2">Observação: {{ order.observation }}</p>
+                            <p class="text-sm text-gray-100 dark:text-white text-bold border border-gray-600 rounded-2xl w-60 p-2 mt-2">Pagamento: R$ {{ order.total_payment }}</p>
+                        </div>
+                    {% endif %}
+                    <!-- Itens do Pedido -->
+                    <div class="mt-4 space-y-2 mb-5">
+                        {% for item in order.order_items.all %}
+                        <div class="flex justify-between items-center py-2">
+                            <div>
+                                <h3 class="text-base font-semibold text-white">{{ item.menu_item.name }}</h3>
+                                <p class="text-xs text-gray-400">Quantidade: {{ item.quantity }}</p>
+                                <p class="text-xs text-gray-400">Preço: R$ {{ item.get_total_value }}</p>
+                                {% if item.special_instructions %}
+                                <p class="text-xs text-yellow-400">Instruções: {{ item.special_instructions }}</p>
+                                {% endif %}
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+
+
+                    <!-- Botão de Cancelar Pedido -->
+                    <div class="absolute bottom-4 right-4 mb-2">
+                        <form action="{% url 'cancel_order' order.id %}" method="post">
+                            {% csrf_token %}
+                            <button type="submit" class="mb-2 text-xs border border-red-500 text-red-500 py-1 px-7 rounded-2xl hover:bg-red-500 hover:text-white">
+                                Cancelar Pedido
+                            </button>
+                        </form>
+                        <button 
+                            id="print-order-{{ order.id }}" 
+                            class="print-order-btn mb-2 text-xs border border-gray-500 text-gray-500 py-1 px-5 rounded-2xl hover:bg-red-500 hover:text-white">
+                            Imprimir Pedido #{{ order.id }}
+                        </button>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+
+
+
+
+            <div class="mt-6 grow sm:mt-8 lg:mt-0">
+                <div class="space-y-6 rounded-lg border border-gray-200 bg-white p-6 shadow-sm dark:border-gray-700 dark:bg-gray-800">
+                    <!-- Título da Seção -->
+                    <h3 class="text-2xl font-bold text-gray-900 dark:text-white">Pedidos AO VIVO:</h3>
+
+                    <!-- Verifica se há pedidos -->
+                    {% if orders|length == 0 %}
+                    <div class="flex flex-col items-center justify-center mt-10 mb-10">
+                        <!-- Verifica se o delivery está ativo -->
+                        {% if restaurant.delivery_is_active %}
+                        <span class="relative flex h-5 w-5">
+                            <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
+                        <span class="relative inline-flex rounded-full h-5 w-5 bg-green-500"></span>
+                        </span>
+                        <h1 class="dark:text-green-400 text-xl font-bold mt-3">Delivery Online</h1> {% else %}
+                        <span class="relative flex h-5 w-5">
+                            <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
+                        <span class="relative inline-flex rounded-full h-5 w-5 bg-red-500"></span>
+                        </span>
+                        <h1 class="dark:text-white text-xl font-bold mt-3">Delivery Desativado</h1>
+                        <h2 class="text-gray-700 dark:text-gray-300 text-lg font-semibold mt-4">
+                            Delivery desativado, verifique em suas configurações.
+                        </h2> {% endif %}
+                    </div>
+                    {% else %} {% endif %}
+                    <ol id="orderList" class="relative space-y-4">
+
+                    </ol>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</section>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+     function saveOrderToLocalStorage(order) {
+      const orders = JSON.parse(localStorage.getItem('orders')) || [];
+      // Verifica se o pedido já está armazenado
+      if (!orders.some(existingOrder => existingOrder.id === order.id)) {
+          orders.push(order);
+          localStorage.setItem('orders', JSON.stringify(orders));
+      }
+    }
+    
+    // Função para renderizar pedidos na lista
+    function renderOrders() {
+      const orders = JSON.parse(localStorage.getItem('orders')) || [];
+      const acceptedOrders = JSON.parse(localStorage.getItem('acceptedOrders')) || [];
+      const canceledOrders = JSON.parse(localStorage.getItem('canceledOrders')) || []; // Para pedidos cancelados
+      const orderList = document.getElementById('orderList');
+      orderList.innerHTML = ''; // Limpa a lista existente
+    
+      // Renderiza todos os pedidos, exceto os aceitos ou cancelados
+      orders.forEach(order => {
+          if (!acceptedOrders.includes(order.id.toString()) && !canceledOrders.includes(order.id.toString())) {
+              addOrderToList(order);
+          }
+      });
+    }
+    
+    
+    // Quando a página carrega, renderiza os pedidos
+    window.onload = function() {
+      renderOrders(); // Renderiza os pedidos armazenados no localStorage
+    };
+    
+
+    
+    
+    
+
+    document.addEventListener('click', function(event) {
+      // Verifica se o elemento clicado é um botão de aceitar pedido
+      if (event.target.classList.contains('order_active')) {
+          const orderDeliveryId = event.target.closest('li').querySelector('#order_delivery').getAttribute('data-order-id');
+    
+          fetch(`/delivery/approve-order/${orderDeliveryId}/`, {  
+              method: 'POST',
+              headers: {
+                  'Content-Type': 'application/json',
+                  'X-CSRFToken': getCookie('csrftoken') 
+              },
+              body: JSON.stringify() 
+          })
+          .then(response => response.json())
+          .then(data => {
+    
+            if (data.success) { 
+                const orderElement = document.getElementById(`order_${orderDeliveryId}`);
+                if (orderElement) {
+                    console.log('deu certo')
+                    orderElement.remove(); 
+                    const acceptedOrders = JSON.parse(localStorage.getItem('acceptedOrders')) || [];
+                    if (!acceptedOrders.includes(orderDeliveryId)) {
+                        acceptedOrders.push(orderDeliveryId);
+                        localStorage.setItem('acceptedOrders', JSON.stringify(acceptedOrders));
+                    }
+                    const orderType = 'delivery'
+                    printOrder(orderDeliveryId, orderType )
+                }
+        
+                // Adiciona o ID do pedido aceito ao localStorage
+               
+            } else {
+                alert(data.error || 'Erro ao aprovar o pedido. Tente novamente.');
+            }
+        })
+      }
+    });
+    
+    function getCookie(name) {
+      let cookieValue = null;
+      if (document.cookie && document.cookie !== '') {
+          const cookies = document.cookie.split(';');
+          for (let i = 0; i < cookies.length; i++) {
+              const cookie = cookies[i].trim();
+              if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                  cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                  break;
+              }
+          }
+      }
+      return cookieValue;
+    }
+    
+    
+    const restaurantCode = '{{restaurant.restaurant_code}}'; 
+    const protocol = window.location.protocol === "https:" ? "wss" : "ws";
+    const domain = window.location.hostname; 
+    const socket = new WebSocket(`${protocol}://${domain}:8001/ws/orders/${restaurantCode}/`);
+    
+    socket.onopen = function(event) {
+     
+    };
+    
+    socket.onmessage = function(event) {
+      const data = JSON.parse(event.data);
+      console.log('Novo pedido recebido:', data.message);
+    
+      // Verifica se `data.order` está definido e contém um ID
+      if (data.order && data.order.id) {
+          addOrderToList(data.order);
+          saveOrderToLocalStorage(data.order); // Salva o pedido no localStorage
+          
+      }
+    };
+    
+        // Função para adicionar um pedido à lista
+        function addOrderToList(order) {
+            const orderList = document.getElementById('orderList'); 
+          
+            if (!orderList) {
+                console.error("Elemento de lista de pedidos não encontrado!");
+                return; 
+            }
+            
+            // Verifica se o pedido já está na lista
+            if (document.getElementById(`order_${order.id}`)) {
+                console.log(`Pedido #${order.id} já existe na lista.`)
+                console.log(order)
+                return; // Não adiciona se já existe
+            }
+    
+            const li = document.createElement('li');
+            li.className = "mb-10 ml-6 ms-14";
+            li.id = `order_${order.id}`; 
+    
+            const orderDate = new Date(order.order_date).toLocaleString('pt-BR', { timeZone: 'UTC' });
+            const totalPayment = parseFloat(order.total_payment);
+            // Renderização do pedido
+            li.innerHTML = `
+            
+            <div class="flex items-center mb-3">
+                <span class="relative flex h-3 w-3">
+                    <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
+                    <span class="relative inline-flex rounded-full h-3 w-3 bg-red-500"></span>
+                </span>
+                <span class="ml-2 text-sm text-red-500 dark:text-red-400">Pendente</span>
+            </div>
+            <p class="text-white mb-2" id="order_delivery" data-order-id="${order.id}">Pedido #${order.id}</p>
+            <h4 class="mb-0.5 text-base font-semibold text-gray-900 dark:text-white">
+                Pedido feito em: <br> ${new Date(order.order_date).toLocaleString('pt-BR')}
+            </h4>
+            <p class="text-sm font-normal text-gray-500 dark:text-gray-400 mb-1">Cliente: ${order.customer_name}</p>
+            <p class="text-xs font-normal text-gray-500 dark:text-gray-400 mb-1">Endereço: ${order.address}, ${order.house_number}<br>
+                ${order.complement ? order.complement : 'N/A'}, ${order.cep}
+            </p>
+            <p class="text-xs text-gray-400 dark:text-gray-300">
+                      Método de Pagamento: <span class="text-white bg-red-600 px-3 ms-2 rounded-lg">${order.payment_method}</span>
+                     
+                    </p>
+            <ul class="pl-4 mt-2 space-y-2 list-disc">
+                ${order.items.map(item => `<li class="text-gray-900 dark:text-gray-200 text-sm">${item.quantity}X - ${item.name}</li>`).join('')}
+            </ul>
+            <h3 class="dark:text-white mt-3 mb-4">Valor a receber: ${order.total_payment}</h3>
+           <div class="flex flex-col sm:flex-row gap-2 sm:gap-4 mt-3">
+              <button type="button" class="order_active w-full sm:w-auto rounded-lg border border-gray-200 bg-white px-5 py-2.5 text-sm font-medium text-white hover:bg-gray-100 hover:text-primary-700 focus:z-10 focus:outline-none focus:ring-4 focus:ring-gray-100 dark:border-gray-600 dark:bg-red-600 dark:text-gray-50 dark:hover:bg-gray-700 dark:hover:text-white dark:focus:ring-gray-700 transition duration-150 ease-in-out px-20">
+                  Aceitar Pedido
+              </button>
+    
+              <button id="cancel-order" class="mt-4 sm:mt-0 w-full sm:w-auto rounded-lg border border-gray-200 px-5 py-2.5 text-sm font-medium text-gray-50 hover:bg-red-700 focus:z-10 focus:outline-none focus:ring-4 focus:ring-gray-100 dark:border-gray-600 transition duration-150 ease-in-out">
+                  Cancelar Pedido
+              </button>
+              
+          </div>
+    
+                
+                
+                
+                `;
+    
+            orderList.appendChild(li); // 
+            
+            const cancelOrderBtn = document.getElementById('cancel-order');
+            const orderDeliveryId = order.id
+           
+            cancelOrderBtn.addEventListener('click', () => { 
+              fetch(`/delivery/cancel-order/${order.id}/`, {  
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': getCookie('csrftoken') 
+                },
+                body: JSON.stringify() 
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) { 
+                    const orderElement = document.getElementById(`order_${order.id}`);
+                    if (orderElement) {
+                        orderElement.remove(); // Remove o elemento do DOM
+                    }
+            
+                    // Adiciona o ID do pedido cancelado ao localStorage
+                    const canceledOrders = JSON.parse(localStorage.getItem('canceledOrders')) || [];
+                    if (!canceledOrders.includes(orderDeliveryId)) {
+                        canceledOrders.push(orderDeliveryId);
+                        localStorage.setItem('canceledOrders', JSON.stringify(canceledOrders));
+                    }
+            
+                    // Remove o pedido do localStorage, caso já esteja lá
+                    const orders = JSON.parse(localStorage.getItem('orders')) || [];
+                    const updatedOrders = orders.filter(order => order.id !== order.id); // Remove o pedido cancelado
+                    localStorage.setItem('orders', JSON.stringify(updatedOrders)); // Atualiza o localStorage
+                } else {
+                    alert(data.error || 'Erro ao cancelar o pedido. Tente novamente.'); // Usar data.error para exibir a mensagem correta
+                }
+            })
+            .catch(error => {
+                console.error("Erro na requisição:", error);
+                alert('Erro ao processar a requisição. Tente novamente.');
+            });
+            
+          });
+          
+    
+        }
+    
+      });
+
+          
+      const printOrderButtons = document.querySelectorAll('.print-order-btn');
+
+
+      printOrderButtons.forEach(button => {
+          button.addEventListener('click', () => {
+              const orderId = button.id.split('-')[2]; 
+              printOrder(orderId, 'delivery'); 
+          });
+      });
+  
+
+</script>
+
+
+
+
+{% endblock %}

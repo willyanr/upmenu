@@ -1,0 +1,222 @@
+{% extends 'index.html' %}
+
+{% block content %}
+<div id="toast-default" class="flex items-center w-full p-4 text-gray-500 bg-white rounded-lg shadow dark:text-gray-400 dark:bg-gray-800" role="alert">
+  <div class="inline-flex items-center justify-center flex-shrink-0 w-8 h-8 text-blue-500 bg-blue-100 rounded-lg dark:bg-red-600 dark:text-blue-200">
+    <svg class="w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 20">
+      <path stroke="#ffffff" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.147 15.085a7.159 7.159 0 0 1-6.189 3.307A6.713 6.713 0 0 1 3.1 15.444c-2.679-4.513.287-8.737.888-9.548A4.373 4.373 0 0 0 5 1.608c1.287.953 6.445 3.218 5.537 10.5 1.5-1.122 2.706-3.01 2.853-6.14 1.433 1.049 3.993 5.395 1.757 9.117Z"/>
+    </svg>
+    <span class="sr-only">Fire icon</span>
+  </div>
+  <h1 class="text-sm font-bold text-white ms-2 w-full">Acompanhe seus pedidos ao vivo:</h1>
+</div>
+
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 mt-3">
+  {% for item in tables %}
+    <div class="bg-[#1F2937] shadow-lg rounded-lg overflow-hidden">
+      <div class="p-4 flex flex-col">
+        <div class="flex justify-between items-center border-b border-gray-700 pb-3 mb-4">
+          {% if item.is_delivery %}
+            <h2 class="text-sm font-semibold text-gray-800 bg-[#79B330] rounded-lg px-6 text-white py-0.5">Delivery</h2>
+          {% else %}
+            <h2 class="text-sm font-semibold bg-custom rounded-lg px-6 text-white py-0.5">Mesa: {{ item.table_number }}</h2>
+          {% endif %}
+    
+          <div>
+            <!-- Exibir IDs dos pedidos -->
+            <span class="bg-blue-100 text-blue-800 px-2 py-1 text-xs font-medium rounded-full">
+              Pedido 
+              {% for order in item.orders %}
+                <span class="inline-block bg-blue-200 text-blue-900 px-2 py-1 text-xs font-medium rounded-full">
+                  {{ order.order_id }}
+                </span>
+                {% if not forloop.last %}, {% endif %}
+              {% endfor %}
+            </span>
+          </div>
+        </div>
+
+        <div class="flex-grow">
+          {% if item.is_delivery %}
+            <div class="mb-4 pb-4 border-b border-gray-500 ">
+              <h3 class="text-sm font-medium text-gray-100">Pedido #{{ item.order_id }}</h3>
+              <p class="text-sm text-gray-300">Cliente: {{ item.customer_name }}</p>
+              <p class="text-sm text-gray-300">Endereço: {{ item.address }}</p>
+              <p class="text-sm text-gray-300">Total: R$ {{ item.total_delivery}}</p>
+
+              <ul class="mt-2 space-y-2">
+                {% for delivery_item in item.items %}
+                  <li class="rounded-lg p-3 bg-gray-700">
+                    <p class="font-medium text-gray-200 text-sm">Item: {{ delivery_item.menu_item }}</p>
+                    <p class="text-sm text-gray-400 ">Quantidade: {{ delivery_item.quantity }}</p>
+                    <p class="text-sm text-gray-400 ">Ingredientes: {{ delivery_item.final_ingredients }}</p>
+                    <p class="font-medium text-gray-200 mt-2 text-sm">Valor: R$ {{ delivery_item.total_value }}</p>
+                  </li>
+                {% endfor %}
+              </ul>
+              
+            </div>
+            <!-- Botão para fechar o pedido de delivery -->
+            <div class="flex flex-col justify-between mt-5">
+              <div>
+                <p class="text-sm font-semibold text-gray-200">Total a pagar: R$ {{ item.total_delivery }}</p>
+              </div>
+              <button class="w-full border border-red-600 text-gray-600 font-medium rounded-lg mt-5 py-2 close-order-button hover:bg-gray-900 hover:text-white bg-custom dark:text-white" data-order-id="{{ item.order_id }}" data-total-amount="{{ item.total_delivery }}">Fechar Pedido</button>
+            </div>
+          {% else %}
+            {% for order in item.orders %}
+              <div class="mb-4 border-b border-gray-700 pb-4">
+                <h3 class="text-sm font-medium text-gray-200">Pedido #{{ order.order_id }}</h3>
+                <p class="text-sm text-gray-300">Date: {{ order.order_date }}</p>
+                <p class="text-sm text-gray-300">Garçon: {{ order.waiter }}</p>
+                <p class="text-sm text-gray-300">Total: R$ {{ order.total_order_value }}</p>
+
+                <ul class="mt-2 space-y-2">
+                  {% for item in order.order_items %}
+                    <li class="bg-gray-700 rounded-lg p-3">
+                      <p class="font-medium text-gray-200">Item: {{ item.menu_item }}</p>
+                      <p class="text-sm text-gray-400">Quantidade: {{ item.quantity }}</p>
+                      <p class="text-sm text-gray-400">Ingredientes: {{ item.final_ingredients }}</p>
+                      <p class="text-sm text-gray-400">Observações: {{ item.special_instructions }}</p>
+                      <p class="font-medium text-gray-200 mt-2">Valor: R$ {{ item.total_value }}</p>
+                    </li>
+                  {% endfor %}
+                </ul>
+              </div>
+              <!-- Botão para fechar o pedido de mesa -->
+              <div class="flex flex-col justify-between">
+                <div>
+                  <p class="text-sm font-semibold text-gray-200">Total a pagar: R$ {{ item.total_table_value }}</p>
+                </div>
+                <button class="w-full border border-red-600 text-gray-600 font-medium rounded-lg mt-5 py-2 close-order-button hover:bg-gray-900 hover:text-white bg-custom dark:text-white" data-order-id="{{ order.order_id }}" data-total-amount="{{ item.total_table_value }}">Fechar Pedido</button>
+              </div>
+            {% endfor %}
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  {% endfor %}
+</div>
+
+
+
+
+<!-- Modal de Confirmação -->
+<div id="confirmation-modal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden">
+  <div class="bg-white rounded-lg shadow-lg p-6 max-w-sm w-full">
+    <h2 class="text-sm font-semibold text-gray-800">Confirmar Fechamento de Pedido</h2>
+    <p id="order-info" class="text-gray-600 mt-2">Detalhes do pedido</p>
+    <p id="total-amount" class="text-white mt-2 bg-red-600 rounded-xl p-1 w-40 pl-2">Total: R$ 0,00</p>
+    <div class="mt-4">
+      <label class="block text-gray-700">Forma de Pagamento:</label>
+      <select id="payment-method" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-500 focus:ring-opacity-50 p-2">
+        <option value="pix" class="ms-10">PIX</option>
+        <option value="dinheiro" class="ms-10">Dinheiro</option>
+        <option value="cartao" class="ms-10">Cartão</option>
+      </select>
+    </div>
+    <div class="flex justify-end mt-4">
+      <button id="confirm-btn" class="bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700">Confirmar</button>
+      <button id="cancel-btn" class="bg-gray-300 text-gray-800 px-4 py-2 rounded-lg ml-2 hover:bg-gray-400">Cancelar</button>
+    </div>
+  </div>
+</div>
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const modal = document.getElementById('confirmation-modal');
+    const confirmBtn = document.getElementById('confirm-btn');
+    const cancelBtn = document.getElementById('cancel-btn');
+    const orderInfo = document.getElementById('order-info');
+    const totalAmount = document.getElementById('total-amount');
+    const paymentMethod = document.getElementById('payment-method');
+
+    let currentOrderId = null;
+
+    // Adiciona evento de clique em todos os botões de fechar pedido
+    document.querySelectorAll('.close-order-button').forEach(button => {
+      button.addEventListener('click', (event) => {
+        currentOrderId = event.target.getAttribute('data-order-id');
+        const orderTotal = event.target.getAttribute('data-total-amount'); // Valor total do pedido
+
+        if (currentOrderId) {
+          // Preenche os detalhes do pedido no modal
+          orderInfo.textContent = `Pedido #${currentOrderId}`;
+          totalAmount.textContent = `Total: R$ ${orderTotal}`;
+          
+          // Exibe o modal
+          modal.classList.remove('hidden');
+        } else {
+          console.error('ID do pedido não encontrado.');
+        }
+      });
+    });
+
+    // Evento de confirmação do modal
+    confirmBtn.addEventListener('click', () => {
+      if (currentOrderId) {
+        // Desativa o botão de confirmação para evitar múltiplos cliques
+        confirmBtn.disabled = true;
+
+        // Envia a requisição para fechar o pedido
+        fetch(`/restaurant/close-order/${currentOrderId}/`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'X-CSRFToken': getCSRFToken() // Função para obter o token CSRF, se necessário
+          },
+          body: JSON.stringify({
+            payment_method: paymentMethod.value
+          })
+        })
+        .then(response => {
+          if (!response.ok) {
+            throw new Error('Erro ao fechar o pedido.');
+          }
+          return response.json();
+        })
+        .then(data => {
+
+          alert('Pedido fechado com sucesso!');
+          window.location.reload();
+          modal.classList.add('hidden');
+        })
+        .catch(error => {
+          alert('Ocorreu um erro ao fechar o pedido. Tente novamente.');
+        })
+        .finally(() => {
+          // Reativa o botão de confirmação
+          confirmBtn.disabled = false;
+        });
+      }
+    });
+
+    // Evento de cancelamento do modal
+    cancelBtn.addEventListener('click', () => {
+      // Fecha o modal sem fechar o pedido
+      modal.classList.add('hidden');
+    });
+
+    // Função para obter o token CSRF do cookie
+    function getCSRFToken() {
+      let cookieValue = null;
+      const cookies = document.cookie.split(';');
+      for (let i = 0; i < cookies.length; i++) {
+        const cookie = cookies[i].trim();
+        if (cookie.startsWith('csrftoken=')) {
+          cookieValue = cookie.substring('csrftoken='.length);
+          break;
+        }
+      }
+      return cookieValue;
+    }
+  });
+</script>
+
+<style>
+  .bg-custom{
+    background-image: linear-gradient(310deg, #b71c1c 0%, #f44336 100%);
+  }
+</style>
+
+
+{% endblock %}

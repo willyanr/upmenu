@@ -1,0 +1,16 @@
+{% extends 'index.html' %}
+
+{% block content %}
+
+    <div class="text-gray-500 p-6 rounded-lg max-w-lg mx-auto text-center">
+        <!-- Ícone SVG -->
+        <div class="flex justify-center mb-4">
+            <svg width="150px" height="auto" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="#111827"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M12 3C7.85113 3 4 5.73396 4 10C4 11.5704 4.38842 12.7289 5.08252 13.6554C5.79002 14.5998 6.87746 15.3863 8.41627 16.0908L9.23259 16.4645L8.94868 17.3162C8.54129 18.5384 7.84997 19.6611 7.15155 20.5844C8.35158 20.2074 9.73434 19.7279 11.0954 19.1583C11.2077 19.833 11.4166 20.475 11.7072 21.0697C9.69758 21.9006 7.70002 22.5276 6.29772 22.9281C5.48665 23.1597 4.84055 22.6838 4.56243 22.1881C4.28848 21.6998 4.22087 20.9454 4.74413 20.3614C5.44439 19.5798 6.21203 18.5732 6.72616 17.4871C5.40034 16.7841 4.29326 15.9376 3.48189 14.8545C2.48785 13.5277 2 11.9296 2 10C2 4.26604 7.14887 1 12 1C16.8511 1 22 4.26604 22 10C22 10.7354 21.9438 11.4357 21.7949 12.1169C21.2214 11.7463 20.5903 11.4571 19.9179 11.266C19.9754 10.8721 20 10.454 20 10C20 5.73396 16.1489 3 12 3Z" fill="#ff0000"></path> <path d="M18 15C17.4477 15 17 15.4477 17 16V18C17 18.0197 17.0006 18.0393 17.0017 18.0588C16.9857 18.3338 17.0828 18.6142 17.2929 18.8243L18.4659 19.9973C18.8564 20.3878 19.4896 20.3878 19.8801 19.9973C20.2706 19.6067 20.2706 18.9736 19.8801 18.583L19 17.703V16C19 15.4477 18.5523 15 18 15Z" fill="#ff0000"></path> <path fill-rule="evenodd" clip-rule="evenodd" d="M18 24C21.3137 24 24 21.3137 24 18C24 14.6863 21.3137 12 18 12C14.6863 12 12 14.6863 12 18C12 21.3137 14.6863 24 18 24ZM18 22.0181C15.7809 22.0181 13.9819 20.2191 13.9819 18C13.9819 15.7809 15.7809 13.9819 18 13.9819C20.2191 13.9819 22.0181 15.7809 22.0181 18C22.0181 20.2191 20.2191 22.0181 18 22.0181Z" fill="#ff0000"></path> </g></svg>
+        </div>
+        <!-- Mensagem de Restaurante Fechado -->
+        <h2 class="text-4xl font-bold mb-5 text-white mt-2">Hmm, pagamento pendente, estamos verificando...</h2>
+        <p class="text-gray-300 mb-20">Sem problemas! Só precisamos de alguns minutinhos para verificar seu pagamento.</p>
+        <a href="/configuracao" class="bg-red-600 text-white rounded-3xl py-3 px-14">Ir para configurações</a>
+    </div>
+
+{% endblock %}

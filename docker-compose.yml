@@ -1,0 +1,79 @@
+version: '3.8'
+
+services:
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8001:8001"
+    env_file:
+      - .env
+    volumes:
+      - .:/app
+      - ./db.sqlite:/app/path/to/db.sqlite
+      - static_volume:/app/staticfiles
+      - media_volume:/app/mediafiles
+    depends_on:
+      - redis  # Garante que o Redis esteja disponível antes de iniciar o serviço Web
+    environment:
+      - CELERY_BROKER_URL=redis://redis:6379/0
+      - CELERY_RESULT_BACKEND=redis://redis:6379/0
+      
+
+  celery_worker:
+    build: .
+    command: celery -A menudog worker --pool=solo -E  # Habilita monitoramento de eventos (-E)
+    depends_on:
+      - redis
+    environment:
+      - CELERY_BROKER_URL=redis://redis:6379/0
+      - CELERY_RESULT_BACKEND=redis://redis:6379/0  # Adicionado backend de resultados do Celery
+
+  celery_beat:
+    build: .
+    command: celery -A menudog beat --loglevel=info
+    depends_on:
+      - redis
+    environment:
+      - CELERY_BROKER_URL=redis://redis:6379/0
+      - CELERY_RESULT_BACKEND=redis://redis:6379/0  # Adicionado backend de resultados do Celery
+  db:
+    image: mysql:latest
+    environment:
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+  
+  
+  
+  
+  redis:
+    image: redis:alpine
+    ports:
+      - "6379:6379"  # Expõe a porta para o Redis
+    volumes:
+      - redis_data:/data  # Mantém os dados do Redis persistentes
+
+  nginx:
+    image: nginx:latest
+    volumes:
+      - ./etc/nginx/nginx.conf:/etc/nginx/nginx.conf
+      - ./etc/nginx/conf.d/default.conf:/etc/nginx/conf.d/default.conf
+      - static_volume:/app/staticfiles
+      - media_volume:/app/mediafiles
+    ports:
+      - "8080:8080"
+    depends_on:
+      - web
+
+volumes:
+  static_volume:
+  media_volume:
+  redis_data:
+  mysql_data:

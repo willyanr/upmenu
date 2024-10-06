@@ -1,0 +1,154 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Status do Pedido</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <meta name="csrf-token" content="{{ csrf_token }}">
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+        body{
+
+           font-family: 'Poppins', sans-serif !important;
+        }
+
+        
+      </style>
+</head>
+<body class="bg-red-600 flex items-center justify-center min-h-screen">
+    <div class="bg-gray-800 shadow-lg rounded-lg p-6 w-96 text-center">
+        <div class="flex justify-center mb-4">
+            <div class="bg-red-600 text-white flex items-center justify-center h-20 w-20 rounded-full">
+                <h1 class="text-3xl">😋</h1>
+            </div>
+        </div>
+        <h4 class="text-2xl font-bold text-white">Parabéns!</h4>
+        <p class="text-gray-400">Seu pedido foi concluído com sucesso.</p>
+
+         <!-- Contador -->
+         <div class="text-center mt-4">
+            <p id="id-order" class="text-gray-300">#Pedido: {{order_delivery.id}}</p>
+            <p class="text-lg font-bold text-gray-800">Tempo de Espera:</p>
+            <p id="timer" class="text-2xl font-bold text-white">05:23 </p>
+            <p class="text-xs text-white">Tempo para restaurante aceitar.</p>
+        </div>
+
+        <div class="mt-6 flex">
+            <div class="flex-1 mx-1">
+                <p class="font-semibold text-center text-sm mb-3 text-white">Pedido Recebido</p>
+                <div class="w-full bg-gray-300 rounded-full h-3 mb-4">
+                    <div class="bg-red-600 h-3 rounded-full" style="width: 100%;"></div>
+                </div>
+            </div>
+            <div class="flex-1 mx-1">
+                <p class="text-sm font-semibold text-center mb-3 text-white">Pedido Aceito</p>
+                <div class="w-full bg-gray-300 rounded-full h-3 mb-4">
+                    <div class="bg-red-600 h-3 rounded-full animated-progress"></div>
+                </div>
+            </div>
+        </div>
+
+        <style>
+            @keyframes progress {
+                0% {
+                    width: 0;
+                }
+                20% {
+                    width: 50%;
+                }
+                50% {
+                    width: 100%;
+                }
+                100% {
+                    width: 0;
+                }
+            }
+        
+            .animated-progress {
+                animation: progress 3s linear infinite;
+            }
+        </style>
+
+       
+    </div>
+    
+    
+      
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Simulador de contador
+        let timerElement = document.getElementById('timer');
+        let seconds = 323; // 5 minutos e 23 segundos
+        const orderId = '{{order_delivery.id}}'
+        const csrftoken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+
+
+        setInterval(() => {
+            if (seconds >= 0) {
+                const hours = Math.floor(seconds / 3600);
+                const minutes = Math.floor((seconds % 3600) / 60);
+                const secs = seconds % 60;
+                timerElement.textContent = `${String(minutes).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
+                seconds--;
+            }
+        }, 1000);
+
+   
+
+        
+        let isOrderApproved = false; // Variável para controlar o estado do pedido
+
+        setInterval(() => {
+            if (!isOrderApproved) { // Verifica se o pedido não foi aprovado
+                fetch(`/delivery/order-status/${orderId}/`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRFToken': csrftoken 
+                    },
+                    body: JSON.stringify({}) 
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.status === 'approved') {
+                        const progress = document.querySelector('.animated-progress');
+                        progress.style.width = '100%'; // Define a largura para 100%
+                        progress.classList.remove('animated-progress'); // Remove a classe de animação
+                        isOrderApproved = true; // Atualiza o estado para aprovado
+                        clearInterval(this);
+                        document.getElementById('timer').style.display = 'none' // Para o setInterval
+                        window.location.href = data.redirect_url;
+                    } 
+
+                    else if (data.status === 'canceled') {
+                        // Redireciona para a página de pedido cancelado
+                        window.location.href = data.redirect_url;
+
+                     }
+                    
+                    
+                    
+                    else {
+                        console.log('Não foi atualizado');
+                    }
+                })
+                .catch(error => console.error('Error:', error));
+            }
+        }, 5000); // Verifica a cada 5 segundos
+
+
+                
+    </script>
+    
+</body>
+
+
+
+</html>

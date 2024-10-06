@@ -1,0 +1,29 @@
+{% extends 'index.html' %}
+
+{% block content %}
+<div class="bg-gray-800 text-white p-6 rounded-lg max-w-lg mx-auto">
+    <h2 class="text-2xl font-bold mb-4 text-center">Editar Imagem do Restaurante</h2>
+    
+    <div class="flex flex-col items-center mb-4">
+        <p class="text-gray-300 mb-2">Imagem Atual:</p>
+        {% if restaurant.img %}
+            <img src="{{ restaurant.img.url }}" alt="Imagem Atual" class="w-full max-w-xs rounded-lg mb-4" style="max-width: 300px; max-height: 300px;">
+        {% else %}
+            <p class="text-gray-500">Nenhuma imagem atual disponível.</p>
+        {% endif %}
+    </div>
+
+    <form method="post" enctype="multipart/form-data" class="flex flex-col items-center">
+        {% csrf_token %}
+        
+        <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white" for="file_input">Upload file</label>
+        <input class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
+               aria-describedby="file_input_help" id="file_input" type="file" name="img">
+        <p class="mt-1 text-sm text-gray-500 dark:text-gray-300" id="file_input_help">SVG, PNG, JPG or GIF (MAX. 300x300px).</p>
+        
+        <button type="submit" class="bg-red-600 text-white py-2 px-4 rounded-lg hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-opacity-50 w-full mt-4   ">Salvar</button>
+    </form>
+    
+    <a href="{% url 'config' %}" class="block mt-4 text-red-600 underline text-center hover:text-blue-700">Cancelar</a>
+</div>
+{% endblock %}

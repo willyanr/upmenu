@@ -1,0 +1,551 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-br" class="dark">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/flowbite@2.4.1/dist/flowbite.min.css" rel="stylesheet" />
+    <title>{% block title %}Meu Site{% endblock %}</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+         body{
+       
+         font-family: 'Poppins', sans-serif !important;
+         }
+         ul li a{
+         margin-bottom: 20px;
+         }
+    </style>
+</head>
+
+<body class="bg-white dark:bg-gray-900">
+    <header class="mb-20">
+        <!-- component -->
+        <nav class="fixed top-0 left-0 w-full flex justify-between px-4 md:px-20 py-2 items-center dark:bg-gray-800 z-50 pb-3">
+
+            <button data-drawer-target="default-sidebar" data-drawer-toggle="default-sidebar" aria-controls="default-sidebar" type="button" class="bg-[#FF0000] inline-flex items-center p-2 mt-2 ms-3 text-sm rounded-full sm:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-white dark:hover:bg-gray-700 dark:focus:ring-gray-600">
+                <span class="sr-only">Open sidebar</span>
+                <svg class="w-6 h-6 text-white" aria-hidden="true" fill="white" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                    <path clip-rule="evenodd" fill-rule="evenodd" d="M2 4.75A.75.75 0 012.75 4h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 4.75zm0 10.5a.75.75 0 01.75-.75h7.5a.75.75 0 010 1.5h-7.5a.75.75 0 01-.75-.75zM2 10a.75.75 0 01.75-.75h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 10z"></path>
+                </svg>
+            </button>
+            <img src="{% static 'images/logo/logo.png' %}" alt="Logo" class="h-12 md:h-12 w-auto">
+            <div class="flex items-center">
+                <ul class="flex space-x-4 md:space-x-6">
+                    <li>
+                        <a href="{% url 'tutoriais'%}">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-gray-600" fill="none" viewBox="0 0 24 24">
+                                <path d="M12 14l9-5-9-5-9 5 9 5z" />
+                                <path d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z" />
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l9-5-9-5-9 5 9 5zm0 0l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14zm-4 6v-7.5l4-2.222"
+                                />
+                            </svg>
+                        </a>
+                    </li>
+                    <li>
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="#ffffff">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"
+                            />
+                        </svg>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+    <main>
+        <aside id="default-sidebar" class="fixed top-0 left-0 z-40 w-64 h-screen transition-transform -translate-x-full sm:translate-x-0" aria-label="Sidebar">
+            <div class="h-full px-3 py-4 overflow-y-auto bg-gray-50 dark:bg-gray-800">
+                <ul class="space-y-2 font-medium mt-20">
+                    <li>
+                        <a href="/dashboard/" class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+                            <svg width="64px" class="flex-shrink-0 w-8 h-8 text-gray-500 transition duration-75 dark:text-white group-hover:text-gray-900 dark:group-hover:text-white" height="64px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                                <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+                                <g id="SVGRepo_iconCarrier">
+                                    <path d="M3 8.976C3 4.05476 4.05476 3 8.976 3H15.024C19.9452 3 21 4.05476 21 8.976V15.024C21 19.9452 19.9452 21 15.024 21H8.976C4.05476 21 3 19.9452 3 15.024V8.976Z" stroke="#ffffff" stroke-width="2"></path>
+                                    <path d="M21 9L3 9" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                                    <path d="M9 21L9 9" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                                </g>
+                            </svg>
+                            <span class="ms-3 text-sm">Dashboard</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{% url 'tables' %}" class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+                            <svg class="flex-shrink-0 w-5 h-5 text-gray-500 transition duration-75 dark:text-white group-hover:text-gray-900 dark:group-hover:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 18 18">
+                                <path d="M6.143 0H1.857A1.857 1.857 0 0 0 0 1.857v4.286C0 7.169.831 8 1.857 8h4.286A1.857 1.857 0 0 0 8 6.143V1.857A1.857 1.857 0 0 0 6.143 0Zm10 0h-4.286A1.857 1.857 0 0 0 10 1.857v4.286C10 7.169 10.831 8 11.857 8h4.286A1.857 1.857 0 0 0 18 6.143V1.857A1.857 1.857 0 0 0 16.143 0Zm-10 10H1.857A1.857 1.857 0 0 0 0 11.857v4.286C0 17.169.831 18 1.857 18h4.286A1.857 1.857 0 0 0 8 16.143v-4.286A1.857 1.857 0 0 0 6.143 10Zm10 0h-4.286A1.857 1.857 0 0 0 10 11.857v4.286c0 1.026.831 1.857 1.857 1.857h4.286A1.857 1.857 0 0 0 18 16.143v-4.286A1.857 1.857 0 0 0 16.143 10Z"
+                                />
+                            </svg>
+                            <span class="flex-1 ms-3 whitespace-nowrap text-sm">Caixa</span>
+                            <span class="inline-flex items-center justify-center px-2 ms-3 text-xs py-0.5 font-medium text-gray-700 bg-red-600 rounded-full dark:bg-red-600 dark:text-white">Fechar Pedidos</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{% url 'menu_user' %}" class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+                            <svg fill="#ffffff" class="flex-shrink-0 w-5 h-5 text-gray-500 transition duration-75 dark:text-white group-hover:text-gray-900 dark:group-hover:text-white" height="64px" width="64px" version="1.1" id="Icons" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                            viewBox="0 0 32 32" xml:space="preserve">
+                                <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                                <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+                                <g id="SVGRepo_iconCarrier">
+                                    <g>
+                                        <path d="M3,22h1.5h23.1H29c0.6,0,1-0.4,1-1s-0.4-1-1-1h-1c-0.2-5.7-4.1-10.4-9.3-11.7C18.9,7.9,19,7.5,19,7c0-1.7-1.3-3-3-3 s-3,1.3-3,3c0,0.5,0.1,0.9,0.3,1.3C8.1,9.6,4.2,14.3,4,20H3c-0.6,0-1,0.4-1,1S2.4,22,3,22z"></path>
+                                        <path d="M5.5,24l0.8,1.5C6.4,25.8,6.8,26,7.2,26h17.7c0.4,0,0.7-0.2,0.9-0.5l0.8-1.5H5.5z"></path>
+                                    </g>
+                                </g>
+                            </svg>
+                            <span class="flex-1 ms-3 whitespace-nowrap text-sm">Fazer pedido</span>
+                            <span class="inline-flex items-center justify-center w-3 h-3 p-3 ms-3 text-sm font-medium text-blue-800 bg-green-500 rounded-full dark:bg-green-500  dark:text-white">+</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{% url 'menu' %}" class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+                            <svg width="64px" height="64px" class="flex-shrink-0 w-6 h-6 text-gray-500 transition duration-75 dark:text-white group-hover:text-gray-900 dark:group-hover:text-white" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                                <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+                                <g id="SVGRepo_iconCarrier">
+                                    <path fill-rule="evenodd" clip-rule="evenodd" d="M5.58579 4.58579C5 5.17157 5 6.11438 5 8V17C5 18.8856 5 19.8284 5.58579 20.4142C6.17157 21 7.11438 21 9 21H15C16.8856 21 17.8284 21 18.4142 20.4142C19 19.8284 19 18.8856 19 17V8C19 6.11438 19 5.17157 18.4142 4.58579C17.8284 4 16.8856 4 15 4H9C7.11438 4 6.17157 4 5.58579 4.58579ZM9 8C8.44772 8 8 8.44772 8 9C8 9.55228 8.44772 10 9 10H15C15.5523 10 16 9.55228 16 9C16 8.44772 15.5523 8 15 8H9ZM9 12C8.44772 12 8 12.4477 8 13C8 13.5523 8.44772 14 9 14H15C15.5523 14 16 13.5523 16 13C16 12.4477 15.5523 12 15 12H9ZM9 16C8.44772 16 8 16.4477 8 17C8 17.5523 8.44772 18 9 18H13C13.5523 18 14 17.5523 14 17C14 16.4477 13.5523 16 13 16H9Z"
+                                    fill="#ffffff"></path>
+                                </g>
+                            </svg>
+                            <span class="flex-1 ms-3 whitespace-nowrap text-sm">Meu Menu</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/faturas/" class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+                            <svg class="flex-shrink-0 w-5 h-5 text-gray-500 transition duration-75 dark:text-white group-hover:text-gray-900 dark:group-hover:text-white" viewBox="0 0 1024 1024" class="icon" version="1.1" xmlns="http://www.w3.org/2000/svg" fill="#ffffff" stroke="#ffffff">
+                                <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                                <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+                                <g id="SVGRepo_iconCarrier">
+                                    <path d="M829.06 73.14h-6.48c-30.41 0-58.57 17.11-75.34 45.75-6.14 10.41-22.29 11.71-29.96 2.43-25.52-31.07-59.41-48.18-95.64-48.18-35.98 0-69.86 17.11-95.41 48.18-6.98 8.48-21.25 8.54-28.27-0.02-25.55-31.05-59.43-48.16-95.41-48.16s-69.86 17.11-95.41 48.18c-7.66 9.38-23.79 8.09-29.95-2.43-16.8-28.64-44.96-45.75-75.36-45.75h-7.23c-46.89 0-85.05 38.16-85.05 85.05V865.8c0 46.89 38.16 85.05 85.05 85.05h7.23c30.39 0 58.55-17.11 75.38-45.79 6.07-10.43 22.21-11.79 29.93-2.38 25.55 31.05 59.43 48.16 95.41 48.16s69.86-17.11 95.41-48.18c7.02-8.52 21.29-8.5 28.27 0.02 25.55 31.05 59.43 48.16 95.66 48.16 35.98 0 69.88-17.11 95.38-48.14 7.77-9.36 23.89-8 29.96 2.36 16.79 28.68 44.95 45.79 75.36 45.79h6.48c46.89 0 85.05-38.16 85.05-85.05V158.2c0-46.9-38.17-85.06-85.06-85.06z m11.91 792.66c0 6.57-5.34 11.91-11.91 11.91h-6.48c-6.14 0-10.91-7.34-12.23-9.61-16.36-27.91-46.61-45.25-78.93-45.25-27.43 0-53.16 12.16-70.64 33.39-6.59 8.02-20.41 21.46-39.14 21.46-18.48 0-32.32-13.46-38.91-21.46-34.84-42.45-106.39-42.46-141.27-0.02-6.59 8.02-20.43 21.48-38.91 21.48s-32.32-13.46-38.91-21.46c-17.43-21.23-43.18-33.39-70.62-33.39-32.36 0-62.61 17.36-78.93 45.25-1.32 2.25-6.11 9.61-12.25 9.61h-7.23c-6.57 0-11.91-5.34-11.91-11.91V158.2c0-6.57 5.34-11.91 11.91-11.91h7.23c6.14 0 10.93 7.36 12.23 9.57 16.34 27.93 46.59 45.29 78.95 45.29 27.45 0 53.2-12.16 70.62-33.38 6.59-8.02 20.43-21.48 38.91-21.48s32.32 13.46 38.91 21.46c34.88 42.48 106.43 42.43 141.27 0.02 6.59-8.02 20.43-21.48 39.16-21.48 18.48 0 32.3 13.45 38.91 21.5 17.46 21.2 43.2 33.36 70.62 33.36 32.32 0 62.57-17.34 78.95-45.29 1.3-2.23 6.07-9.57 12.21-9.57h6.48c6.57 0 11.91 5.34 11.91 11.91v707.6z"
+                                    fill="#ffffff"></path>
+                                    <path d="M255.93 438.95h365.71v73.14H255.93zM255.92 292.67h511.82v73.14H255.92zM767.83 658.36v-73.15H584.97v182.86h73.15v-58l83.85 83.86 51.72-51.72-83.86-83.85z" fill="#ffffff"></path>
+                                </g>
+                            </svg>
+                            <span class="flex-1 ms-3 whitespace-nowrap text-sm">Faturas</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" aria-disabled="" class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+                            <svg class="flex-shrink-0 w-5 h-5 text-gray-500 transition duration-75 dark:text-white group-hover:text-gray-900 dark:group-hover:text-white" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                                <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+                                <g id="SVGRepo_iconCarrier">
+                                    <path d="M6.50041 4H14.0004C17.7716 4 19.6573 4 20.8288 5.17157C22.0004 6.34315 22.0004 8.22876 22.0004 12C22.0004 15.7712 22.0004 17.6569 20.8288 18.8284C19.7295 19.9277 17.1211 19.9955 13.688 19.9997C13.3083 20.0002 13.0004 19.6922 13.0004 19.3125C13.0004 13.6171 8.38335 9 2.68791 9C2.30822 9 1.99946 8.69216 2.00197 8.31247C2.00401 8.00282 2.00874 7.71893 2.01967 7.60793C2.20672 5.70882 3.70923 4.20631 5.60834 4.01926C5.8039 4 6.03607 4 6.50041 4Z"
+                                    fill="#ffffff"></path>
+                                    <path d="M2 10.25C1.58579 10.25 1.25 10.5858 1.25 11C1.25 11.4142 1.58579 11.75 2 11.75C6.55635 11.75 10.25 15.4437 10.25 20C10.25 20.4142 10.5858 20.75 11 20.75C11.4142 20.75 11.75 20.4142 11.75 20C11.75 14.6152 7.38478 10.25 2 10.25Z" fill="#ffffff"></path>
+                                    <path d="M2 13.25C1.58579 13.25 1.25 13.5858 1.25 14C1.25 14.4142 1.58579 14.75 2 14.75C4.8995 14.75 7.25 17.1005 7.25 20C7.25 20.4142 7.58579 20.75 8 20.75C8.41421 20.75 8.75 20.4142 8.75 20C8.75 16.2721 5.72792 13.25 2 13.25Z" fill="#ffffff"></path>
+                                    <path d="M2 16.25C1.58579 16.25 1.25 16.5858 1.25 17C1.25 17.4142 1.58579 17.75 2 17.75C3.24264 17.75 4.25 18.7574 4.25 20C4.25 20.4142 4.58579 20.75 5 20.75C5.41421 20.75 5.75 20.4142 5.75 20C5.75 17.9289 4.07107 16.25 2 16.25Z" fill="#ffffff"></path>
+                                </g>
+                            </svg>
+                            <span class="flex-1 ms-3 whitespace-nowrap text-sm">Tutoriais</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{% url 'delivery' %}" class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+                            <svg fill="#ffffff" class="flex-shrink-0 w-7 h-7 text-gray-500 transition duration-75 dark:text-white group-hover:text-gray-900 dark:group-hover:text-white" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                            viewBox="0 0 457.75 457.75" xml:space="preserve" stroke="#ffffff" stroke-width="0.00457751">
+                                <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                                <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+                                <g id="SVGRepo_iconCarrier">
+                                    <g id="XMLID_14_">
+                                        <path id="XMLID_110_" d="M165.062,245.376l-23.933,0.019l-7.708,6.554c-6.662,5.664-8.991,14.934-5.797,23.074l14.313,36.482 l-0.006-6.985C141.914,281.699,150.663,260.965,165.062,245.376z"></path>
+                                        <path id="XMLID_221_" d="M324.85,251.949l-7.708-6.554l-23.933-0.019c14.399,15.589,23.148,36.323,23.13,59.144l-0.006,6.985 l14.313-36.482C333.841,266.883,331.512,257.613,324.85,251.949z"></path>
+                                        <circle id="XMLID_450_" cx="226.487" cy="35.358" r="35.358"></circle>
+                                        <path id="XMLID_798_" d="M228.99,335.274c-0.006,0-0.012,0-0.018,0c-11.751,0.009-21.27,9.543-21.26,21.294l0.064,79.922 c0.009,11.745,9.534,21.26,21.277,21.26c0.006,0,0.012,0,0.018,0c11.751-0.009,21.27-9.543,21.26-21.294l-0.064-79.922 C250.257,344.788,240.733,335.273,228.99,335.274z"></path>
+                                        <path id="XMLID_804_" d="M348.604,206.941c-2.005-8.247-14.696-60.458-16.586-68.231c-0.863-3.549-2.841-6.727-5.644-9.066 l-50.148-41.868c-2.085-1.741-4.703-2.684-7.419-2.678l-84.251,0.194c-3.059,0.007-6.006,1.154-8.263,3.218 c-0.003,0.003-0.007,0.006-0.01,0.01l-54.038,49.496c-2.963,2.715-4.874,6.388-5.394,10.372 c-0.884,6.765-7.178,54.961-8.045,61.604c-1.22,9.343,5.364,17.905,14.707,19.126c4.811,0.626,9.435-0.811,12.994-3.717 l56.662-0.045c2.162,6.29,6.038,12.12,11.433,16.662c-25.129,9.807-42.692,34.222-42.669,62.489l0.059,74.273 c0.007,8.391,6.819,15.198,15.21,15.198c0.004,0,0.008,0,0.012,0l10.528-0.009l-0.03-37.382 c-0.018-22.76,18.365-41.292,41.26-41.311h0.018c22.742,0,41.258,18.502,41.276,41.244l0.03,37.383v0l10.526-0.009h0.002 c8.389-0.006,15.204-6.812,15.198-15.222c-0.065-80.8-0.006-75.189-0.196-78.33c-1.628-26.898-19.038-49.197-42.63-58.363 c-0.001,0-0.002,0-0.002-0.001c5.06-4.274,9.127-9.999,11.407-16.68l58.092-0.047c3.873,2.531,8.668,3.439,13.365,2.297 C345.212,225.321,350.83,216.096,348.604,206.941z M228.888,230.887c-0.004,0-0.009,0-0.014,0c-9.778,0-17.738-7.951-17.746-17.731 c-0.008-9.808,7.922-17.752,17.73-17.76c0.004,0,0.009,0,0.014,0c9.778,0,17.738,7.951,17.746,17.731 C246.627,222.912,238.673,230.879,228.888,230.887z M264.58,200.929c-5.067-14.774-19.139-25.6-35.911-25.529 c-16.322,0.085-30.455,10.588-35.54,25.586l-48.743,0.039c4.045-30.969,0.791-6.056,5.492-42.052l31.634-28.975l0.11,49.977 c10.616-15.122,28.09-24.563,47.221-24.578h0.03h0.001h0.001c16.816,0.001,32.366,7.301,43.101,19.345l-0.101-46.151l28.316,23.642 c2.68,11.025,9.446,38.858,11.828,48.659L264.58,200.929z"></path>
+                                    </g>
+                                </g>
+                            </svg>
+                            <span class="flex-1 ms-3 whitespace-nowrap text-sm">Delivery</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{% url 'config' %}" class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+                            <svg class="flex-shrink-0 w-6 h-6 text-gray-500 transition duration-75 dark:text-white" version="1.1" id="Icons" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 32 32" xml:space="preserve" width="64px" height="64px"
+                            fill="#ffffff" stroke="#ffffff">
+                                <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                                <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+                                <g id="SVGRepo_iconCarrier">
+                                    <style type="text/css">
+                                        .st0{fill:none;stroke:#000000;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;}
+                                    </style>
+                                    <g>
+                                        <path d="M16,3C10.5,3,6,7.5,6,13c0,8.4,9,15.5,9.4,15.8c0.2,0.1,0.4,0.2,0.6,0.2s0.4-0.1,0.6-0.2C17,28.5,26,21.4,26,13 C26,7.5,21.5,3,16,3z M22,14.6c-0.1,0.5-0.7,0.8-1.2,0.7c-0.4-0.1-0.7,0-0.7,0c0,0,0,0.3,0.3,0.6c0.4,0.4,0.4,1,0,1.4 c-0.8,0.8-1.7,1.3-2.8,1.6c-0.1,0-0.2,0-0.3,0c-0.4,0-0.8-0.3-1-0.7S16,17.7,16,17.7c0,0-0.3,0.2-0.4,0.6c-0.2,0.5-0.7,0.8-1.2,0.7 c-1-0.3-2-0.8-2.8-1.6c-0.4-0.4-0.4-1,0-1.4c0.3-0.3,0.3-0.6,0.3-0.6c0,0-0.3-0.1-0.7,0c-0.5,0.1-1.1-0.2-1.2-0.7 c-0.1-0.5-0.2-1.1-0.2-1.6s0.1-1.1,0.2-1.6c0.1-0.5,0.7-0.8,1.2-0.7c0.4,0.1,0.7,0,0.7,0c0,0,0-0.3-0.3-0.6c-0.4-0.4-0.4-1,0-1.4 c0.8-0.8,1.7-1.3,2.8-1.6c0.5-0.1,1.1,0.2,1.2,0.7C15.7,8.1,16,8.3,16,8.3c0,0,0.3-0.2,0.4-0.6c0.2-0.5,0.7-0.8,1.2-0.7 c1,0.3,2,0.8,2.8,1.6c0.4,0.4,0.4,1,0,1.4c-0.3,0.3-0.3,0.6-0.3,0.6c0,0,0.3,0.1,0.7,0c0.5-0.1,1.1,0.2,1.2,0.7 c0.1,0.5,0.2,1.1,0.2,1.6S22.1,14.1,22,14.6z"></path>
+                                        <circle cx="16" cy="13" r="2"></circle>
+                                    </g>
+                                </g>
+                            </svg>
+                            <span class="ml-3 text-sm">Configurações</span>
+                        </a>
+                    </li>
+                    <li>
+                        <form action="{% url 'logout' %}" method="post">
+                            {% csrf_token %}
+                            <button type="submit" class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+                                <svg class="flex-shrink-0 w-5 h-5 text-gray-500 transition duration-75 dark:text-white group-hover:text-gray-900 dark:group-hover:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 16">
+                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 8h11m0 0L8 4m4 4-4 4m4-11h3a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2h-3" />
+                                </svg>
+                                <span class="flex-1 ms-3 whitespace-nowrap text-sm">Sair</span>
+                            </button>
+                        </form>
+                    </li>
+                </ul>
+                <div id="dropdown-cta" class="p-4 mt-6 rounded-lg bg-red-50 dark:bg-green-50" role="alert">
+                    <div class="flex items-center mb-3">
+                        <span class="bg-red-600 text-orange-800 text-sm font-semibold me-2 px-2.5 py-0.5 rounded dark:bg-red-600 dark:text-white">Dica</span>
+                        <button type="button" class="ms-auto -mx-1.5 -my-1.5 bg-blue-50 inline-flex justify-center items-center w-6 h-6 text-blue-900 rounded-lg focus:ring-2 focus:ring-blue-400 p-1 hover:bg-blue-200 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-gray-800"
+                        data-dismiss-target="#dropdown-cta" aria-label="Close">
+                            <span class="sr-only">Close</span>
+                            <svg class="w-2.5 h-2.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
+                            </svg>
+                        </button>
+                    </div>
+                    <p class="mb-3 text-sm text-blue-800 dark:text-gray-400">
+                        Sempre feche o pedido no seu caixa, assim você deixa suas mesas disponíveis para os garçons realizarem pedidos.
+                    </p>
+                </div>
+            </div>
+        </aside>
+        <div class="p-4 sm:ml-64">
+            <div class="p-1">
+                <div id="notification-area" class="fixed top-0 right-0 p-4 space-y-2 z-50">
+                    <div id="notification-modal" class="hidden fixed z-10 inset-0 overflow-y-auto" aria-labelledby="modal-title" role="dialog" aria-modal="true">
+                        <div class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+                            <div class="fixed inset-0 bg-gray-900 bg-opacity-80 transition-opacity" aria-hidden="true"></div>
+                            <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
+                            <div class="inline-block align-bottom bg-gray-800 rounded-lg text-left text-xs overflow-hidden transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
+                                <div class="bg-gray-800 px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+                                    <div class="sm:flex sm:items-start">
+                                        <div class="mx-auto flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full bg-red-100 dark:bg-red-600 sm:mx-0 sm:h-10 sm:w-10">
+                                            <svg fill="#ffffff" height="20px" width="20px" version="1.1" id="Icons" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 32 32" xml:space="preserve" stroke="#ffffff">
+                                                <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                                                <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+                                                <g id="SVGRepo_iconCarrier">
+                                                    <g>
+                                                        <path d="M3,22h1.5h23.1H29c0.6,0,1-0.4,1-1s-0.4-1-1-1h-1c-0.2-5.7-4.1-10.4-9.3-11.7C18.9,7.9,19,7.5,19,7c0-1.7-1.3-3-3-3 s-3,1.3-3,3c0,0.5,0.1,0.9,0.3,1.3C8.1,9.6,4.2,14.3,4,20H3c-0.6,0-1,0.4-1,1S2.4,22,3,22z"></path>
+                                                        <path d="M5.5,24l0.8,1.5C6.4,25.8,6.8,26,7.2,26h17.7c0.4,0,0.7-0.2,0.9-0.5l0.8-1.5H5.5z"></path>
+                                                    </g>
+                                                </g>
+                                            </svg>
+                                        </div>
+                                        <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left w-full p-2">
+                                            <h3  id="notification-message" class="text-lg leading-6 font-bold text-gray-900 dark:text-gray-100" id="modal-title">
+                                              
+                                          </h3>
+                                            <div class="mt-2">
+                                                <p class="text-sm text-gray-500 dark:text-gray-400"></p>
+                                            </div>
+                                            <div id="order-details" class="mt-4 text-gray-300">
+                                                <!-- Detalhes do pedido serão inseridos aqui -->
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <script>
+                    const protocol = window.location.protocol === "https:" ? "wss" : "ws";
+                    const domain = window.location.hostname; 
+                    const restaurantCode = "{{ restaurant_code }}";
+                    const socket = new WebSocket(`${protocol}://${domain}:8001/ws/orders/${restaurantCode}/`);
+                    const orderButton = document.getElementById('order');
+                    const modalNotification = document.getElementById('notification-modal');
+                    
+
+                    socket.onopen = function (event) {
+                        console.log("Conectado ao WebSocket");
+                    };
+                
+                    const openedWindows = {};
+                
+                    function printOrder(orderData, orderType) {
+
+           
+                        if (openedWindows[orderData]) {
+                            openedWindows[orderData].focus();
+                            return;
+                        }
+                
+                        const pdfWindow = window.open(`/serve-pdf/${orderData}/${orderType}/`);
+                
+                        if (!pdfWindow) {
+                            alert("Popup bloqueado! Por favor, permita popups para este site.");
+                            return;
+                        }
+                
+                        openedWindows[orderData] = pdfWindow;
+                
+                        const checkIfLoaded = setInterval(() => {
+                            if (pdfWindow.document.readyState === 'complete') {
+                                pdfWindow.print();
+                
+                                pdfWindow.onafterprint = () => {
+                                    pdfWindow.close();
+                                    delete openedWindows[orderData];
+                                };
+                
+                                clearInterval(checkIfLoaded);
+                            }
+                        }, 100);
+                    }
+                
+                    socket.onmessage = function (event) {
+                        
+                        const data = JSON.parse(event.data);
+               
+                        
+                        if (data && data.type === 'new_order') {
+                            const orderData = data.order;
+
+                            modalNotification.classList.remove('hidden')
+                            document.getElementById('notification-message').textContent = `${data.message} Delivery` ;
+                
+
+                            const orderDetailsElement = document.getElementById('order-details');
+
+                            if(orderData.pickup){
+                                orderDetailsElement.innerHTML = `
+                                <div class="dark:bg-gray-800 rounded-lg w-full">
+                                 <div class="space-y-2 border border-dashed border-gray-400 p-2 rounded-lg">
+                                     <div class="flex justify-between items-center">
+                                         <p class="text-gray-500 dark:text-gray-300">Nome do Cliente:</p>
+                                         <p class="text-gray-800 dark:text-white font-medium"> ${orderData.customer_name || 'N/A'}</p>
+                                     </div>
+                                     <div class="flex justify-between items-center">
+                                         <p class="text-gray-500 dark:text-gray-300">Endereço:</p>
+                                         <p class="text-white bg-red-600 px-4 py-1 rounded-2xl dark:text-white"> Retirada </p>
+                                     </div>
+                                    
+                                     <div class="flex justify-between items-center">
+                                         <p class="text-gray-500 dark:text-gray-300">Total do Pedido:</p>
+                                         <p class="text-green-500 font-bold"> ${orderData.total_order || 'N/A'}</p>
+                                     </div>
+                                     <div class="flex justify-between items-center">
+                                         <p class="text-gray-500 dark:text-gray-300">Hora do Pedido:</p>
+                                         <p class="text-gray-800 dark:text-white">${new Date(orderData.order_date).toLocaleTimeString('pt-BR') || 'N/A'}</p>
+                                     </div>
+                                 </div>
+ 
+                                 <div class="flex justify-end mt-4 space-x-4">
+                                     <button id="close-modal" class="dark:bg-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-200 py-2 px-4 rounded-md border border-gray-300 dark:border-gray-600 transition duration-150 ease-in-out">
+                                         Fechar
+                                     </button>
+                                     <button id="approve-order" class="bg-red-600 hover:bg-red-700 text-white py-2 px-4 rounded-md shadow-sm transition duration-150 ease-in-out">
+                                         Aceitar Pedido
+                                     </button>
+                                 </div>
+                             </div>
+ 
+ 
+ 
+                             `;
+
+
+
+                            }
+                            else{
+
+                                orderDetailsElement.innerHTML = `
+                                <div class="dark:bg-gray-800 rounded-lg w-full">
+                                 <div class="space-y-2 border border-dashed border-gray-400 p-2 rounded-lg">
+                                     <div class="flex justify-between items-center">
+                                         <p class="text-gray-500 dark:text-gray-300">Nome do Cliente:</p>
+                                         <p class="text-gray-800 dark:text-white font-medium"> ${orderData.customer_name || 'N/A'}</p>
+                                     </div>
+                                     <div class="flex justify-between items-center">
+                                         <p class="text-gray-500 dark:text-gray-300">Endereço:</p>
+                                         <p class="text-gray-800 dark:text-white"> ${orderData.address}, ${orderData.house_number}</p>
+                                     </div>
+                                     <div class="flex justify-between items-center">
+                                         <p class="text-gray-500 dark:text-gray-300">Bairro:</p>
+                                         <p class="text-gray-800 dark:text-white"> ${orderData.complement || 'N/A'}</p>
+                                     </div>
+                                     <div class="flex justify-between items-center">
+                                         <p class="text-gray-500 dark:text-gray-300">Total do Pedido:</p>
+                                         <p class="text-green-500 font-bold"> ${orderData.total_order || 'N/A'}</p>
+                                     </div>
+                                     <div class="flex justify-between items-center">
+                                         <p class="text-gray-500 dark:text-gray-300">Hora do Pedido:</p>
+                                         <p class="text-gray-800 dark:text-white">${new Date(orderData.order_date).toLocaleTimeString('pt-BR') || 'N/A'}</p>
+                                     </div>
+                                 </div>
+ 
+                                 <div class="flex justify-end mt-4 space-x-4">
+                                     <button id="close-modal" class="dark:bg-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-200 py-2 px-4 rounded-md border border-gray-300 dark:border-gray-600 transition duration-150 ease-in-out">
+                                         Fechar
+                                     </button>
+                                     <button id="approve-order" class="bg-red-600 hover:bg-red-700 text-white py-2 px-4 rounded-md shadow-sm transition duration-150 ease-in-out">
+                                         Aceitar Pedido
+                                     </button>
+                                 </div>
+                             </div>
+ 
+ 
+ 
+                             `;
+
+
+
+                            }
+                
+                          
+
+                            const btnCloseModal = document.getElementById('close-modal');
+                            btnCloseModal.addEventListener('click', () => {
+                                modalNotification.classList.add('hidden')
+                                
+        
+        
+                            });
+
+                            const orderButton = document.getElementById('approve-order');
+                            const orderType = 'delivery'
+                            orderButton.addEventListener('click', () => {
+                                console.log("Botão clicado, iniciando o processo de pedido..."); // Debug
+                                
+                                const pdfWindow = window.open(`/serve-pdf/${orderData.id}/${orderType}/`);
+                                
+                                if (!pdfWindow) {
+                                    alert("Popup bloqueado! Por favor, permita popups para este site.");
+                                    return;
+                                }
+                            
+                                pdfWindow.onload = () => {
+                                    try {
+                                        pdfWindow.focus(); 
+                                        pdfWindow.print(); 
+                                    } catch (error) {
+                                        console.error("Erro ao tentar imprimir o PDF:", error);
+                                    }
+                                };
+                            
+                                const checkWindowClosed = setInterval(() => {
+                                    if (pdfWindow.closed) {
+                                        clearInterval(checkWindowClosed); 
+                            
+                                        fetch(`/delivery/approve-order/${orderData.id}/`, {
+                                            method: 'POST',
+                                            headers: {
+                                                'Content-Type': 'application/json',
+                                                'X-CSRFToken': getCookie('csrftoken')
+                                            }
+                                        })
+                                        .then(response => {
+                                    
+                                  
+                                            if (response.ok) {
+                                                modalNotification.classList.add('hidden')
+                                                const orderElement = document.getElementById(`order_${orderData.id}`);
+                                                console.log('deu certo')
+                                                orderElement.remove(); 
+                                                const acceptedOrders = JSON.parse(localStorage.getItem('acceptedOrders')) || [];
+                                                if (!acceptedOrders.includes(orderData.id)) {
+                                                    acceptedOrders.push(orderData.id);
+                                                    localStorage.setItem('acceptedOrders', JSON.stringify(acceptedOrders));
+                                                    
+                                                }
+
+                                                const orders = JSON.parse(localStorage.getItem('orders')) || [];
+                                                const updatedOrders = orders.filter(order => order.id !== order.id); 
+                                                localStorage.setItem('orders', JSON.stringify(updatedOrders)); 
+                                           
+                                            
+                                            
+                                           
+                                                
+                                            } else {
+                                                console.error("Erro ao aprovar o pedido.");
+                                            }
+                                        })
+                                        .catch(error => {
+                                            console.error("Erro na requisição:", error);
+                                        });
+                                    }
+                                }, 1000);
+                            });
+                            
+                            
+                            
+                        }
+
+                        if (data.type === 'new_order_table') {
+
+                            const orderData = data.order;
+
+
+                            modalNotification.classList.remove('hidden')
+                            document.getElementById('notification-message').innerHTML = `Novo Pedido Mesa: <span class="text-white bg-red-600 px-5 ms-2 rounded-lg">${data.order.table}</span>`;
+
+                
+
+                            const orderDetailsElement = document.getElementById('order-details');
+
+                            orderDetailsElement.innerHTML = `
+                                <div class="space-y-2 p-2 text-sm border border-dashed border-gray-400 p-2 rounded-lg">
+                                    <p class="text-gray-300">#Pedido: <span class="text-white font-bold">${orderData.id}</span></p>
+                                    <p class="text-gray-300">Garçon: <span class="text-green-500 font-bold">${orderData.waiter}</span></p> 
+                                    <p class="text-gray-300"><strong>Hora do Pedido:</strong> <span class="text-white">${orderData.order_date}</span></p>
+                                </div>
+                                <div class="bg-gray-50 dark:bg-gray-800 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse mt-1">
+                                    <button id="send-order" class="mt-2 sm:mt-0 w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-red-600 text-base font-medium text-white hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 sm:ml-3 sm:w-auto sm:text-sm">Enviar para cozinha</button>
+                                </div>
+                            `;
+
+                            const orderButton = document.getElementById('send-order');
+                            
+                            
+                            orderButton.addEventListener('click', () => {
+                                const orderType = 'table'
+                                printOrder(orderData.id, orderType);
+                                console.log('AQUIIIIIIIIIIIII', orderData.id)
+                                modalNotification.classList.add('hidden')
+                             
+                            });
+                           
+                        } 
+
+                        function getCookie(name) {
+                            let cookieValue = null;
+                            if (document.cookie && document.cookie !== '') {
+                                const cookies = document.cookie.split(';');
+                                for (let i = 0; i < cookies.length; i++) {
+                                    const cookie = cookies[i].trim();
+                                    if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                                        break;
+                                    }
+                                }
+                            }
+                            return cookieValue;
+                        }
+                    };
+
+                    
+
+                    
+                </script>
+                
+                <!-- Script para marcar notificações como lidas -->
+
+                {% block content %} {% endblock %}
+            </div>
+        </div>
+        </div>
+    </main>
+    <style>
+        .bg-custom{
+         background-image: linear-gradient(310deg, #b71c1c 0%, #f44336 100%);
+         }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+    <script src="https://cdn.jsdelivr.net/npm/flowbite@2.4.1/dist/flowbite.min.js"></script>
+</body>
+
+</html>

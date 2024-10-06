@@ -1,0 +1,138 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-br" class="dark">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Status do Pedido</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <meta name="csrf-token" content="{{ csrf_token }}">
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+        body{
+
+           font-family: 'Poppins', sans-serif !important;
+        }
+
+        
+      </style>
+</head>
+<body class="bg-red-600 justify-center min-h-screen">
+    <div class="flex items-center justify-center min-h-screen">
+        <div class="bg-gray-800 shadow-lg rounded-lg p-6 w-96 text-center flex flex-col">
+            <div class="flex justify-center mb-4">
+                <div class="bg-red-600 text-white flex items-center justify-center h-20 w-20 rounded-full">
+                    <h1 class="text-3xl">🚫</h1> <!-- Ícone indicando que o pedido não foi aceito -->
+                </div>
+            </div>
+            <h4 class="text-2xl font-bold text-white">Ops!</h4>
+            <p class="text-gray-400">Infelizmente, seu pedido não foi aceito pelo restaurante <span class="font-bold">{{ restaurant.name }}</span>.</p>
+    
+            <!-- Mensagem de suporte -->
+            <div class="mt-4">
+                <p id="id-order" class="text-gray-300">#Pedido: {{ order.id }}</p>
+                <p class="text-white text-xs text-gray-400 mt-10 text-start">Se você precisar de suporte ou quiser tentar novamente, entre em contato com o restaurante pelo botão do WhatsApp.</p>
+            </div>
+    
+            <!-- Botão do WhatsApp -->
+            <div class="mt-6">
+                <a href="https://api.whatsapp.com/send?phone={{ restaurant.whatsapp_number }}&text=Olá! Gostaria de informações sobre meu pedido #{{ order.id }}." 
+                   class="bg-green-600 text-white font-bold py-2 px-4 rounded hover:bg-green-600 transition duration-200  rounded-2xl">
+                    Falar com o Restaurante
+                </a>
+            </div>
+        </div>
+    </div>
+    
+    
+    <div class="fixed bottom-4 right-4">
+        <a href="https://wa.me/55{{ restaurant.phone_number }}?text=Olá,%20preciso%20de%20suporte%20para%20o%20pedido%20{{ order.id }} - VIA DELIVERY, por favor." 
+        target="_blank" 
+        class="flex items-center justify-center w-12 h-12 bg-green-500 text-white rounded-full shadow-lg hover:bg-green-600 transition duration-300">
+         <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" 
+              alt="WhatsApp" 
+              class="w-8 h-8">
+     </a>
+     
+
+    </div>
+    
+
+    <!-- footer -->
+    <footer class="bg-gray-900 mt-6">
+        <div class="container px-6 py-12 mx-auto">
+            <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 sm:gap-y-10 lg:grid-cols-4">
+                <div class="sm:col-span-2">
+                    <h1 class="max-w-lg text-xl font-semibold tracking-tight text-gray-400 xl:text-2xl dark:text-white">Teve algum problema com o restaurante?</h1>
+    
+                    <div class="flex flex-col mx-auto mt-6 space-y-3 md:space-y-0 md:flex-row">
+                        <input id="email" type="text" class="px-4 py-2 text-gray-700 border rounded-xl dark:bg-gray-900 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 dark:focus:border-blue-300 focus:outline-none focus:ring focus:ring-opacity-40 focus:ring-blue-300" placeholder="Conte um pouco sobre o que aconteceu">
+                
+                        <button class="w-full px-6 py-2.5 text-sm font-medium tracking-wider text-white transition-colors duration-300 transform md:w-auto md:mx-4 focus:outline-none bg-red-600 rounded-xl hover:bg-gray-700 focus:ring focus:ring-gray-300 focus:ring-opacity-80">
+                            Preciso de suporte
+                        </button>
+                    </div>
+                </div>
+    
+                <div>
+                    <p class="font-semibold text-gray-800 dark:text-white">upMenu</p>
+    
+                    <div class="flex flex-col items-start mt-2 space-y-2">
+                        <a href="https://upmenu.online/home/" class="text-gray-600 transition-colors duration-300 dark:text-gray-300 dark:hover:text-blue-400 hover:underline hover:text-blue-500">Quem somos?</a>
+                        <a href="https://upmenu.online/home/#pricing" class="text-gray-600 transition-colors duration-300 dark:text-gray-300 dark:hover:text-blue-400 hover:underline hover:text-blue-500">Planos</a>
+                        <a href="#" class="text-gray-600 transition-colors duration-300 dark:text-gray-300 dark:hover:text-blue-400 hover:underline hover:text-blue-500"></a>
+                    </div>
+                </div>
+    
+                <div>
+                    <p class="font-semibold text-gray-800 dark:text-white">Links Úteis</p>
+    
+                    <div class="flex flex-col items-start mt-2 space-y-2">
+                        <a href="#" class="text-gray-600 transition-colors duration-300 dark:text-gray-300 dark:hover:text-blue-400 hover:underline hover:text-blue-500">Políticas de Privacidade</a>
+                        <a href="#" class="text-gray-600 transition-colors duration-300 dark:text-gray-300 dark:hover:text-blue-400 hover:underline hover:text-blue-500">Termos e Condições</a>
+                        <a href="https://upmenu.online/home/" class="text-gray-600 transition-colors duration-300 dark:text-gray-300 dark:hover:text-blue-400 hover:underline hover:text-blue-500">Perguntas Frequentes</a>
+                    </div>
+                </div>
+            </div>
+            
+            <hr class="my-6 border-gray-200 md:my-8 dark:border-gray-700">
+            
+            <div class="flex items-center justify-between">
+                <a href="#">
+                    <img class="w-auto h-14" src="{% static 'images/logo/logo.png' %}" alt="">
+                </a>
+                
+                <div class="flex -mx-2">
+                    <a href="#" class="mx-2 text-gray-600 transition-colors duration-300 dark:text-gray-300 hover:text-blue-500 dark:hover:text-blue-400" aria-label="Reddit">
+                       <svg class="w-5 h-5 fill-current" viewBox="0 -3 20 20" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" fill="#000000"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <title>youtube [#ff0000]</title> <desc>Created with Sketch.</desc> <defs> </defs> <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"> <g id="Dribbble-Light-Preview" transform="translate(-300.000000, -7442.000000)" fill="#ff0000"> <g id="icons" transform="translate(56.000000, 160.000000)"> <path d="M251.988432,7291.58588 L251.988432,7285.97425 C253.980638,7286.91168 255.523602,7287.8172 257.348463,7288.79353 C255.843351,7289.62824 253.980638,7290.56468 251.988432,7291.58588 M263.090998,7283.18289 C262.747343,7282.73013 262.161634,7282.37809 261.538073,7282.26141 C259.705243,7281.91336 248.270974,7281.91237 246.439141,7282.26141 C245.939097,7282.35515 245.493839,7282.58153 245.111335,7282.93357 C243.49964,7284.42947 244.004664,7292.45151 244.393145,7293.75096 C244.556505,7294.31342 244.767679,7294.71931 245.033639,7294.98558 C245.376298,7295.33761 245.845463,7295.57995 246.384355,7295.68865 C247.893451,7296.0008 255.668037,7296.17532 261.506198,7295.73552 C262.044094,7295.64178 262.520231,7295.39147 262.895762,7295.02447 C264.385932,7293.53455 264.28433,7285.06174 263.090998,7283.18289" id="youtube-[#ff0000]"> </path> </g> </g> </g> </g></svg>
+                    </a>
+    
+                    <a href="#" class="mx-2 text-gray-600 transition-colors duration-300 dark:text-red-600 hover:text-blue-500 dark:hover:text-blue-400" aria-label="Facebook">
+                        <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24" fill="none"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <path
+                                d="M2.00195 12.002C2.00312 16.9214 5.58036 21.1101 10.439 21.881V14.892H7.90195V12.002H10.442V9.80204C10.3284 8.75958 10.6845 7.72064 11.4136 6.96698C12.1427 6.21332 13.1693 5.82306 14.215 5.90204C14.9655 5.91417 15.7141 5.98101 16.455 6.10205V8.56104H15.191C14.7558 8.50405 14.3183 8.64777 14.0017 8.95171C13.6851 9.25566 13.5237 9.68693 13.563 10.124V12.002H16.334L15.891 14.893H13.563V21.881C18.8174 21.0506 22.502 16.2518 21.9475 10.9611C21.3929 5.67041 16.7932 1.73997 11.4808 2.01722C6.16831 2.29447 2.0028 6.68235 2.00195 12.002Z">
+                            </path>
+                        </svg>
+                    </a>
+    
+                    <a href="#" class="mx-2 text-gray-600 transition-colors duration-300 dark:text-gray-300 hover:text-blue-500 dark:hover:text-blue-400" aria-label="Github">
+                        <svg class="w-5 h-5 fill-current" viewBox="0 0 24.00 24.00" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="#ff0000" stroke-width="0.00024000000000000003"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path fill-rule="evenodd" clip-rule="evenodd" d="M12 18C15.3137 18 18 15.3137 18 12C18 8.68629 15.3137 6 12 6C8.68629 6 6 8.68629 6 12C6 15.3137 8.68629 18 12 18ZM12 16C14.2091 16 16 14.2091 16 12C16 9.79086 14.2091 8 12 8C9.79086 8 8 9.79086 8 12C8 14.2091 9.79086 16 12 16Z" fill="#ff0000"></path> <path d="M18 5C17.4477 5 17 5.44772 17 6C17 6.55228 17.4477 7 18 7C18.5523 7 19 6.55228 19 6C19 5.44772 18.5523 5 18 5Z" fill="#ff0000"></path> <path fill-rule="evenodd" clip-rule="evenodd" d="M1.65396 4.27606C1 5.55953 1 7.23969 1 10.6V13.4C1 16.7603 1 18.4405 1.65396 19.7239C2.2292 20.8529 3.14708 21.7708 4.27606 22.346C5.55953 23 7.23969 23 10.6 23H13.4C16.7603 23 18.4405 23 19.7239 22.346C20.8529 21.7708 21.7708 20.8529 22.346 19.7239C23 18.4405 23 16.7603 23 13.4V10.6C23 7.23969 23 5.55953 22.346 4.27606C21.7708 3.14708 20.8529 2.2292 19.7239 1.65396C18.4405 1 16.7603 1 13.4 1H10.6C7.23969 1 5.55953 1 4.27606 1.65396C3.14708 2.2292 2.2292 3.14708 1.65396 4.27606ZM13.4 3H10.6C8.88684 3 7.72225 3.00156 6.82208 3.0751C5.94524 3.14674 5.49684 3.27659 5.18404 3.43597C4.43139 3.81947 3.81947 4.43139 3.43597 5.18404C3.27659 5.49684 3.14674 5.94524 3.0751 6.82208C3.00156 7.72225 3 8.88684 3 10.6V13.4C3 15.1132 3.00156 16.2777 3.0751 17.1779C3.14674 18.0548 3.27659 18.5032 3.43597 18.816C3.81947 19.5686 4.43139 20.1805 5.18404 20.564C5.49684 20.7234 5.94524 20.8533 6.82208 20.9249C7.72225 20.9984 8.88684 21 10.6 21H13.4C15.1132 21 16.2777 20.9984 17.1779 20.9249C18.0548 20.8533 18.5032 20.7234 18.816 20.564C19.5686 20.1805 20.1805 19.5686 20.564 18.816C20.7234 18.5032 20.8533 18.0548 20.9249 17.1779C20.9984 16.2777 21 15.1132 21 13.4V10.6C21 8.88684 20.9984 7.72225 20.9249 6.82208C20.8533 5.94524 20.7234 5.49684 20.564 5.18404C20.1805 4.43139 19.5686 3.81947 18.816 3.43597C18.5032 3.27659 18.0548 3.14674 17.1779 3.0751C16.2777 3.00156 15.1132 3 13.4 3Z" fill="#ff0000"></path> </g></svg>
+                    </a>
+                </div>
+            </div>
+            <p class="text-white ms-2 mt-3"><strong>CNPJ: 50.243.271/0001-46</strong> </p>
+            <p class="text-gray-400 text-start text-xs ms-2">A <strong>upMenu</strong> não oferece produtos próprios. Todos os produtos disponíveis no menu são de exclusiva propriedade e responsabilidade dos restaurantes cadastrados na nossa plataforma de delivery. As publicidades e propagandas relacionadas aos produtos são de responsabilidade dos respectivos restaurantes.</p>
+        </div>
+    </footer>
+    
+
+</body>
+
+
+
+</html>

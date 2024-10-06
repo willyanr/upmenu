@@ -1,0 +1,50 @@
+{% extends 'index.html' %}
+
+{% block content %}
+<div class="bg-gray-900 text-white p-6 rounded-lg shadow-md max-w-lg mx-auto">
+    <h2 class="text-2xl font-bold mb-4 text-center">Adicionar Mesa</h2>
+    <form method="post" class="space-y-4">
+        {% csrf_token %}
+        {{ form.non_field_errors }}
+        
+        <!-- Número da Mesa -->
+        <div class="mb-10">
+            <label for="id_table_number" class="block text-sm font-medium mb-1">Número da Mesa</label>
+            {{ form.table_number }}
+            {{ form.table_number.errors }}
+        </div>
+
+        <!-- Disponível Toggle -->
+        <div class="mb-6 flex items-center">
+            <label for="id_is_active" class="block text-sm font-medium mb-1 mr-2">Disponível</label>
+            <div class="relative">
+                <input type="checkbox" id="id_is_active" name="is_active" class="sr-only" {% if form.is_active.value %}checked{% endif %} />
+                <div class="block bg-red-500 rounded-full w-14 h-8 cursor-pointer"></div>
+                <div class="dot absolute left-1 top-1 bg-white w-6 h-6 rounded-full transition-transform duration-300 {% if form.is_active.value %}transform translate-x-full bg-green-500{% endif %}"></div>
+            </div>
+            {{ form.is_active.errors }}
+        </div>
+
+        <!-- Botão de Enviar -->
+        <button type="submit" class="text-white py-2 px-4 rounded-lg bg-[#79b330] focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-opacity-50">Adicionar Mesa</button>
+    </form>
+    <a href="{% url 'index' %}" class="block mt-10 text-red-500 underline text-center hover:text-red-700">Cancelar</a>
+</div>
+{% endblock %}
+
+<!-- Add custom styles for toggle switch -->
+<style>
+    .dot {
+        top: 1px;
+        left: 1px;
+    }
+
+    input:checked ~ .dot {
+        transform: translateX(100%);
+        background-color: #00FF00; /* Green */
+    }
+
+    input:checked ~ .block {
+        background-color: #00FF00; /* Green */
+    }
+</style>

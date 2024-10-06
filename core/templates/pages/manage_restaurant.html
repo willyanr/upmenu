@@ -1,0 +1,435 @@
+{% extends 'index.html' %}
+{% load static %}
+
+
+{% block content %}
+<div class="container mx-auto">
+  {% if error %}
+  <div class="bg-red-500 text-white p-4 rounded-lg">
+      {{ error }}
+  </div>
+{% endif %}
+</div>
+<div class="mb-5  ">
+    <div class="flex flex-wrap -mx-6">
+        <div class="w-full px-6 sm:w-1/2 xl:w-1/3">
+            <div class="flex items-center px-5 py-6 shadow-sm rounded-md dark:bg-gray-800">
+                <div class="p-3 rounded-lg bg-red-600">
+                    <svg class="h-8 w-8 text-white"  viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M14.2084 13.5521C16.3025 13.5521 18 11.8615 18 9.77606C18 7.6906 16.3025 6 14.2084 6C12.1144 6 10.4169 7.6906 10.4169 9.77606C10.4169 10.742 10.8578 11.4446 10.8578 11.4446L6.27264 16.011C6.0669 16.2159 5.77886 16.7486 6.27264 17.2404L6.8017 17.7673C7.00743 17.9429 7.52471 18.1888 7.94796 17.7673L8.56519 17.1526C9.18242 17.7673 9.88782 17.416 10.1523 17.0647C10.5932 16.45 10.0642 15.8353 10.0642 15.8353L10.2405 15.6597C11.087 16.5027 11.8277 16.011 12.0922 15.6597C12.5331 15.045 12.0922 14.4303 12.0922 14.4303C11.9159 14.079 11.5632 14.079 12.004 13.64L12.5331 13.113C12.9564 13.4643 13.8264 13.5521 14.2084 13.5521Z" stroke="#ffffff" stroke-width="1.5" stroke-linejoin="round"></path> <path d="M22 12C22 16.714 22 19.0711 20.5355 20.5355C19.0711 22 16.714 22 12 22C7.28595 22 4.92893 22 3.46447 20.5355C2 19.0711 2 16.714 2 12C2 7.28595 2 4.92893 3.46447 3.46447C4.92893 2 7.28595 2 12 2C16.714 2 19.0711 2 20.5355 3.46447C21.5093 4.43821 21.8356 5.80655 21.9449 8" stroke="#ffffff" stroke-width="1.5" stroke-linecap="round"></path> </g></svg>
+                </div>
+                <div class="ml-4 w-full">
+                    <div class="flex justify-between items-center">
+                        <h4 class="text-lg font-semibold text-gray-200">{{ plan.get_plan_name_display }}</h4>
+                        
+                        {% if plan.status == 'active' %}
+                        <span class="inline-flex items-center bg-green-100 text-green-800 text-xs font-medium px-3.5 py-1 rounded-full dark:bg-green-900 dark:text-green-300">
+                            <span class="w-2 h-2 me-1 bg-green-500 rounded-full"></span>
+                            Ativo
+                        </span>
+                        {% elif plan.status == 'pending' %}
+                        <span class="inline-flex items-center bg-yellow-100 text-yellow-800 text-xs font-medium px-4 py-1 rounded-full dark:bg-yellow-900 dark:text-yellow-300">
+                            <span class="w-2 h-2 me-1 bg-yellow-500 rounded-full"></span>
+                             Pendente
+                        </span>
+                        {% else %}
+                        <span class="inline-flex items-center bg-red-100 text-red-800 text-xs font-medium px-3.5 py-1 rounded-full dark:bg-red-900 dark:text-red-300">
+                            <span class="w-2 h-2 me-1 bg-red-500 rounded-full"></span>
+                            Desativado
+                        </span>
+
+                        {% endif %}
+                    </div>
+                    <div class="text-gray-500">Seu plano</div>
+                </div>
+            </div>
+        </div>
+        
+
+        <div class="w-full mt-6 px-6 sm:w-1/2 xl:w-1/3 sm:mt-0">
+            <div class="flex items-center px-5 py-6 shadow-sm rounded-md dark:bg-gray-800">
+                <div class="p-3 rounded-lg bg-red-600">
+                    <svg class="h-8 w-8 text-white"    viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg" fill="#ffffff" stroke="#ffffff" stroke-width="0.00048000000000000007"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round" stroke="#CCCCCC" stroke-width="0.9600000000000002"></g><g id="SVGRepo_iconCarrier"> <path d="M0 0h48v48H0z" fill="none"></path> <g id="Shopicon"> <path d="M17,22c1.274,0,2.473-0.305,3.542-0.835c-2.66-2.167-4.361-5.466-4.361-9.165c0-2.176,0.598-4.208,1.624-5.959 C17.541,6.014,17.272,6,17,6c-4.418,0-8,3.582-8,8S12.582,22,17,22z"></path> <circle cx="28" cy="12" r="7.819"></circle> <path d="M30,24c-5.952,0-10.813,1.913-12.9,4.777c-1.05-0.914-1.862-1.813-2.3-2.379c-1.986-2.643-5.754-3.181-8.4-1.198 c-2.646,1.984-3.185,5.753-1.199,8.4C5.519,34.025,13.131,44,24,44h20V32C44,27.439,37.981,24,30,24z M8.4,31.2 c-0.662-0.882-0.482-2.139,0.397-2.8c0.36-0.27,0.783-0.399,1.201-0.399c0.608,0,1.207,0.274,1.596,0.791 C11.647,28.864,17.026,36,24,36h8v-2l0,0v-2h-8c-1.229,0-2.46-0.385-3.61-0.962C21.518,29.573,25.025,28,30,28 c6.104,0,10,2.369,10,4v8h-2H24C15.107,40,8.669,31.559,8.4,31.2z"></path> </g> </g></svg>
+                </div>
+
+                <div class="mx-5">
+                    <h4 class="text-lg font-semibold text-gray-200">Próxima Cobrança</h4>
+                    <div class="text-gray-300">{{ plan.next_billing_date|date:"d/m/Y" }} </div>
+                    
+                </div>
+            </div>
+        </div>
+
+        <div class="w-full mt-6 px-6 sm:w-1/2 xl:w-1/3 sm:mt-0">
+            <div class="flex items-center px-5 py-6 shadow-sm rounded-md dark:bg-gray-800">
+                <div class="p-3 rounded-lg bg-red-600">
+                  <svg class="h-8 w-8 text-white" viewBox="0 0 1024.00 1024.00" class="icon" version="1.1" xmlns="http://www.w3.org/2000/svg" fill="#b80000" stroke="#b80000" stroke-width="0.01024"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"><path d="M731.15 585.97c-100.99 0-182.86 81.87-182.86 182.86s81.87 182.86 182.86 182.86 182.86-81.87 182.86-182.86-81.87-182.86-182.86-182.86z m0 292.57c-60.5 0-109.71-49.22-109.71-109.71s49.22-109.71 109.71-109.71c60.5 0 109.71 49.22 109.71 109.71s-49.21 109.71-109.71 109.71z" fill="#ffffff"></path><path d="M718.01 778.55l-42.56-38.12-36.6 40.86 84.02 75.26 102.98-118.46-41.4-36zM219.51 474.96h219.43v73.14H219.51z" fill="#ffffff"></path><path d="M182.61 365.86h585.62v179.48h73.14V145.21c0-39.96-32.5-72.48-72.46-72.48h-27.36c-29.18 0-55.04 16.73-65.88 42.59-5.71 13.64-27.82 13.66-33.57-0.02-10.86-25.86-36.71-42.57-65.88-42.57h-18.16c-29.18 0-55.04 16.73-65.88 42.59-5.71 13.64-27.82 13.66-33.57-0.02-10.86-25.86-36.71-42.57-65.88-42.57H375.3c-29.18 0-55.04 16.73-65.88 42.59-5.71 13.64-27.82 13.66-33.57-0.02-10.86-25.86-36.71-42.57-65.88-42.57H182.4c-39.96 0-72.48 32.52-72.48 72.48v805.14h401.21v-73.14H183.04l-0.43-511.35z m25.81-222.29c14.25 34.09 47.32 56.11 84.23 56.11 36.89 0 69.96-22.02 82.66-53.8l15.86-2.3c14.25 34.09 47.32 56.11 84.23 56.11 36.89 0 69.96-22.02 82.66-53.8l16.59-2.3c14.25 34.09 47.32 56.11 84.23 56.11 36.89 0 69.96-22.02 82.66-53.8l26.68-0.66v147.5H182.54l-0.13-146.84 26.01-2.33z" fill="#ffffff"></path></g></svg>
+
+                </div>
+
+                
+                
+                
+
+                                
+            </div>
+        </div>
+    </div>
+</div>
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:mt-3">
+      <!-- Editar Restaurante -->
+      <div class="bg-gray-800 p-6 rounded-lg shadow-md">
+          <h2 class="text-xl font-semibold mb-4 text-gray-200">Meu Restaurante</h2>
+          <div class="group rounded-2xl transition-all duration-500 hover:border-red-600">
+            <div class="flex items-center gap-5 mb-6">
+              <div class="relative inline-block">
+                <!-- Imagem do restaurante -->
+                <img src="{{ restaurant.img.url }}" alt="Restaurante avatar" class="w-auto h-20 rounded-lg">
+            
+                <!-- Ícone de lápis SVG clicável -->
+                <a href="{% url 'edit_image' %}" class="absolute bottom-0 right-0 p-1">
+                  <svg class="w-5 h-5 text-gray-700 bg-white rounded-full" viewBox="0 -0.5 25 25" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path fill-rule="evenodd" clip-rule="evenodd" d="M17.7 5.12758L19.266 6.37458C19.4172 6.51691 19.5025 6.71571 19.5013 6.92339C19.5002 7.13106 19.4128 7.32892 19.26 7.46958L18.07 8.89358L14.021 13.7226C13.9501 13.8037 13.8558 13.8607 13.751 13.8856L11.651 14.3616C11.3755 14.3754 11.1356 14.1751 11.1 13.9016V11.7436C11.1071 11.6395 11.149 11.5409 11.219 11.4636L15.193 6.97058L16.557 5.34158C16.8268 4.98786 17.3204 4.89545 17.7 5.12758Z" stroke="#000000" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path> <path d="M12.033 7.61865C12.4472 7.61865 12.783 7.28287 12.783 6.86865C12.783 6.45444 12.4472 6.11865 12.033 6.11865V7.61865ZM9.23301 6.86865V6.11865L9.23121 6.11865L9.23301 6.86865ZM5.50001 10.6187H6.25001L6.25001 10.617L5.50001 10.6187ZM5.50001 16.2437L6.25001 16.2453V16.2437H5.50001ZM9.23301 19.9937L9.23121 20.7437H9.23301V19.9937ZM14.833 19.9937V20.7437L14.8348 20.7437L14.833 19.9937ZM18.566 16.2437H17.816L17.816 16.2453L18.566 16.2437ZM19.316 12.4937C19.316 12.0794 18.9802 11.7437 18.566 11.7437C18.1518 11.7437 17.816 12.0794 17.816 12.4937H19.316ZM15.8863 6.68446C15.7282 6.30159 15.2897 6.11934 14.9068 6.2774C14.5239 6.43546 14.3417 6.87397 14.4998 7.25684L15.8863 6.68446ZM18.2319 9.62197C18.6363 9.53257 18.8917 9.13222 18.8023 8.72777C18.7129 8.32332 18.3126 8.06792 17.9081 8.15733L18.2319 9.62197ZM8.30001 16.4317C7.8858 16.4317 7.55001 16.7674 7.55001 17.1817C7.55001 17.5959 7.8858 17.9317 8.30001 17.9317V16.4317ZM15.767 17.9317C16.1812 17.9317 16.517 17.5959 16.517 17.1817C16.517 16.7674 16.1812 16.4317 15.767 16.4317V17.9317ZM12.033 6.11865H9.23301V7.61865H12.033V6.11865ZM9.23121 6.11865C6.75081 6.12461 4.7447 8.13986 4.75001 10.6203L6.25001 10.617C6.24647 8.96492 7.58269 7.62262 9.23481 7.61865L9.23121 6.11865ZM4.75001 10.6187V16.2437H6.25001V10.6187H4.75001ZM4.75001 16.242C4.7447 18.7224 6.75081 20.7377 9.23121 20.7437L9.23481 19.2437C7.58269 19.2397 6.24647 17.8974 6.25001 16.2453L4.75001 16.242ZM9.23301 20.7437H14.833V19.2437H9.23301V20.7437ZM14.8348 20.7437C17.3152 20.7377 19.3213 18.7224 19.316 16.242L17.816 16.2453C17.8195 17.8974 16.4833 19.2397 14.8312 19.2437L14.8348 20.7437ZM19.316 16.2437V12.4937H17.816V16.2437H19.316ZM14.4998 7.25684C14.6947 7.72897 15.0923 8.39815 15.6866 8.91521C16.2944 9.44412 17.1679 9.85718 18.2319 9.62197L17.9081 8.15733C17.4431 8.26012 17.0391 8.10369 16.6712 7.7836C16.2897 7.45165 16.0134 6.99233 15.8863 6.68446L14.4998 7.25684ZM8.30001 17.9317H15.767V16.4317H8.30001V17.9317Z" fill="#000000"></path> </g></svg>
+                   
+                </a>
+            </div>
+            
+            <div class="grid gap-1">
+             <h5 class="text-gray-200 font-medium transition-all duration-500">{{ restaurant.name }}</h5>
+             <span class="text-sm leading-6 text-gray-300">{{ restaurant.address }}</span>
+            </div>
+            </div>
+            <div class="flex items-center mb-2 gap-2 text-amber-500 transition-all duration-500  ">
+            <svg class="w-5 h-5" viewBox="0 0 18 17" fill="none" xmlns="http://www.w3.org/2000/svg">
+             <path d="M8.10326 1.31699C8.47008 0.57374 9.52992 0.57374 9.89674 1.31699L11.7063 4.98347C11.8519 5.27862 12.1335 5.48319 12.4592 5.53051L16.5054 6.11846C17.3256 6.23765 17.6531 7.24562 17.0596 7.82416L14.1318 10.6781C13.8961 10.9079 13.7885 11.2389 13.8442 11.5632L14.5353 15.5931C14.6754 16.41 13.818 17.033 13.0844 16.6473L9.46534 14.7446C9.17402 14.5915 8.82598 14.5915 8.53466 14.7446L4.91562 16.6473C4.18199 17.033 3.32456 16.41 3.46467 15.5931L4.15585 11.5632C4.21148 11.2389 4.10393 10.9079 3.86825 10.6781L0.940384 7.82416C0.346867 7.24562 0.674378 6.23765 1.4946 6.11846L5.54081 5.53051C5.86652 5.48319 6.14808 5.27862 6.29374 4.98347L8.10326 1.31699Z" fill="currentColor"></path>
+            </svg>
+            <svg class="w-5 h-5" viewBox="0 0 18 17" fill="none" xmlns="http://www.w3.org/2000/svg">
+             <path d="M8.10326 1.31699C8.47008 0.57374 9.52992 0.57374 9.89674 1.31699L11.7063 4.98347C11.8519 5.27862 12.1335 5.48319 12.4592 5.53051L16.5054 6.11846C17.3256 6.23765 17.6531 7.24562 17.0596 7.82416L14.1318 10.6781C13.8961 10.9079 13.7885 11.2389 13.8442 11.5632L14.5353 15.5931C14.6754 16.41 13.818 17.033 13.0844 16.6473L9.46534 14.7446C9.17402 14.5915 8.82598 14.5915 8.53466 14.7446L4.91562 16.6473C4.18199 17.033 3.32456 16.41 3.46467 15.5931L4.15585 11.5632C4.21148 11.2389 4.10393 10.9079 3.86825 10.6781L0.940384 7.82416C0.346867 7.24562 0.674378 6.23765 1.4946 6.11846L5.54081 5.53051C5.86652 5.48319 6.14808 5.27862 6.29374 4.98347L8.10326 1.31699Z" fill="currentColor"></path>
+            </svg>
+            <svg class="w-5 h-5" viewBox="0 0 18 17" fill="none" xmlns="http://www.w3.org/2000/svg">
+             <path d="M8.10326 1.31699C8.47008 0.57374 9.52992 0.57374 9.89674 1.31699L11.7063 4.98347C11.8519 5.27862 12.1335 5.48319 12.4592 5.53051L16.5054 6.11846C17.3256 6.23765 17.6531 7.24562 17.0596 7.82416L14.1318 10.6781C13.8961 10.9079 13.7885 11.2389 13.8442 11.5632L14.5353 15.5931C14.6754 16.41 13.818 17.033 13.0844 16.6473L9.46534 14.7446C9.17402 14.5915 8.82598 14.5915 8.53466 14.7446L4.91562 16.6473C4.18199 17.033 3.32456 16.41 3.46467 15.5931L4.15585 11.5632C4.21148 11.2389 4.10393 10.9079 3.86825 10.6781L0.940384 7.82416C0.346867 7.24562 0.674378 6.23765 1.4946 6.11846L5.54081 5.53051C5.86652 5.48319 6.14808 5.27862 6.29374 4.98347L8.10326 1.31699Z" fill="currentColor"></path>
+            </svg>
+            <svg class="w-5 h-5" viewBox="0 0 18 17" fill="none" xmlns="http://www.w3.org/2000/svg">
+             <path d="M8.10326 1.31699C8.47008 0.57374 9.52992 0.57374 9.89674 1.31699L11.7063 4.98347C11.8519 5.27862 12.1335 5.48319 12.4592 5.53051L16.5054 6.11846C17.3256 6.23765 17.6531 7.24562 17.0596 7.82416L14.1318 10.6781C13.8961 10.9079 13.7885 11.2389 13.8442 11.5632L14.5353 15.5931C14.6754 16.41 13.818 17.033 13.0844 16.6473L9.46534 14.7446C9.17402 14.5915 8.82598 14.5915 8.53466 14.7446L4.91562 16.6473C4.18199 17.033 3.32456 16.41 3.46467 15.5931L4.15585 11.5632C4.21148 11.2389 4.10393 10.9079 3.86825 10.6781L0.940384 7.82416C0.346867 7.24562 0.674378 6.23765 1.4946 6.11846L5.54081 5.53051C5.86652 5.48319 6.14808 5.27862 6.29374 4.98347L8.10326 1.31699Z" fill="currentColor"></path>
+            </svg>
+            <svg class="w-5 h-5" viewBox="0 0 18 17" fill="none" xmlns="http://www.w3.org/2000/svg">
+             <path d="M8.10326 1.31699C8.47008 0.57374 9.52992 0.57374 9.89674 1.31699L11.7063 4.98347C11.8519 5.27862 12.1335 5.48319 12.4592 5.53051L16.5054 6.11846C17.3256 6.23765 17.6531 7.24562 17.0596 7.82416L14.1318 10.6781C13.8961 10.9079 13.7885 11.2389 13.8442 11.5632L14.5353 15.5931C14.6754 16.41 13.818 17.033 13.0844 16.6473L9.46534 14.7446C9.17402 14.5915 8.82598 14.5915 8.53466 14.7446L4.91562 16.6473C4.18199 17.033 3.32456 16.41 3.46467 15.5931L4.15585 11.5632C4.21148 11.2389 4.10393 10.9079 3.86825 10.6781L0.940384 7.82416C0.346867 7.24562 0.674378 6.23765 1.4946 6.11846L5.54081 5.53051C5.86652 5.48319 6.14808 5.27862 6.29374 4.98347L8.10326 1.31699Z" fill="currentColor"></path>
+            </svg>
+            </div>
+            <form method="post">
+              {% csrf_token %}
+              <p class="mb-2 text-white text-sm">Descrição do Restaurante:</p>
+              <textarea  rows="4" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500" name="description" id="description" value="{{ restaurant.description }}">{{ restaurant.description }}</textarea>
+              <div class="grid grid-cols-2 md:grid-cols-2 gap-4 mt-5">
+                  <!-- Nome -->
+                  <div>
+                      <label for="name" class="block text-gray-300 text-xs mb-2">Nome</label>
+                      <input type="text" name="name" id="name" value="{{ restaurant.name }}" class="w-full px-4 py-2 border border-gray-600 rounded-2xl bg-gray-800 text-xs text-gray-200">
+                  </div>
+                  <!-- Endereço -->
+                  <div>
+                      <label for="address" class="block text-gray-300 text-xs mb-2">Endereço</label>
+                      <input type="text" name="address" id="address" value="{{ restaurant.address }}" class="w-full px-4 py-2 border border-gray-600 rounded-2xl bg-gray-800 text-xs text-gray-200">
+                  </div>
+                  <!-- CEP -->
+                  <div>
+                      <label for="cep" class="block text-gray-300 text-xs mb-2">CEP</label>
+                      <input type="text" name="cep" id="cep" value="{{ restaurant.cep }}" class="w-full px-4 py-2 border border-gray-600 rounded-2xl bg-gray-800 text-xs text-gray-200">
+                  </div>
+                  <!-- CNPJ -->
+                  <div>
+                      <label for="cnpj" class="block text-gray-300 text-xs mb-2">CNPJ</label>
+                      <input type="text" name="cnpj" id="cnpj" value="{{ restaurant.cnpj }}" class="w-full px-4 py-2 border border-gray-600 rounded-2xl bg-gray-800 text-xs text-gray-200" disabled>
+                  </div>
+                  <!-- CPF -->
+                  <div>
+                      <label for="cpf" class="block text-gray-300 text-xs mb-2">CPF</label>
+                      <input type="text" name="cpf" id="cpf" value="{{ restaurant.cpf }}" class="w-full px-4 py-2 border border-gray-600 rounded-2xl bg-gray-800 text-xs text-gray-200" disabled>
+                  </div>
+                  <!-- Telefone -->
+                  <div>
+                      <label for="phone_number" class="block text-gray-300 text-xs mb-2">Telefone</label>
+                      <input type="text" name="phone_number" id="phone_number" value="{{ restaurant.phone_number }}" class="w-full px-4 py-2 border border-gray-600 rounded-2xl bg-gray-800 text-xs text-gray-200">
+                  </div>
+                  <!-- Delivery Ativo -->
+                  <div class="col-span-2 flex items-center">
+                      <input type="checkbox" name="delivery_is_active" id="delivery_is_active" {% if restaurant.delivery_is_active %}checked{% endif %} class="form-checkbox text-red-600">
+                      <label for="delivery_is_active" class="ml-2 text-gray-300 text-xs mb-2">Delivery Ativo</label>
+                  </div>
+              </div>
+              <button type="submit" name="update_restaurant" class="mt-20 px-6 py-2 bg-red-600 text-white rounded-2xl hover:bg-red-700">Atualizar Restaurante</button>
+          </form>
+          
+          </div>
+          
+      </div>
+
+      <!-- Adicionar Mesa -->
+      <div class="bg-gray-800 p-5 rounded-lg shadow-md">
+        <h2 class="text-xl font-semibold mb-4 text-gray-200">Mesas e Garçons</h2>
+        <div class="relative rounded-2xl p-4 transition-all duration-500 col-span-12">
+  
+          <h4 class="text-base font-semibold text-gray-200 mb-2 transition-all duration-500 ">Adicione uma mesa +</h4>
+        
+          <form method="post">
+            {% csrf_token %}
+            <div>
+              <label for="table_number" class="block text-gray-300 mb-2">Número da Mesa</label>
+              <input type="number" name="table_number" id="table_number" class="px-4 py-1 border border-gray-600 rounded-2xl   bg-gray-700 text-gray-200 w-40">
+            </div>
+            <button type="submit"name="add_table" class="mt-4 group flex items-center gap-2 text-sm font-semibold text-white transition-all duration-500 ">Adiciona uma Mesa <svg class="transition-all duration-500  group-hover:translate-x-1" width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M2.25 9L14.25 9M10.5 13.5L14.4697 9.53033C14.7197 9.28033 14.8447 9.15533 14.8447 9C14.8447 8.84467 14.7197 8.71967 14.4697 8.46967L10.5 4.5" stroke="#ffffff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"></path>
+            </svg>
+            </button>
+          </form>
+         
+        </div>
+          
+          <div class="relative border border-solid border-gray-400 rounded-2xl p-4 transition-all duration-500 col-span-12">
+            <div class=" mb-3">
+              <svg fill="#ffffff" height="26px" width="26px" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 512.003 512.003" xml:space="preserve" stroke="#ffffff"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <g> <g> <g> <path d="M256.001,238.426c65.738,0,119.219-53.48,119.219-119.219C375.221,53.475,321.739,0,256.001,0 S136.782,53.475,136.782,119.207C136.782,184.946,190.263,238.426,256.001,238.426z"></path> <path d="M288.254,442.692h-64.506c-3.562,0-6.451,2.889-6.451,6.451v56.409c0,3.563,2.889,6.451,6.451,6.451h64.506 c3.562,0,6.451-2.887,6.451-6.451v-56.409C294.705,445.58,291.816,442.692,288.254,442.692z"></path> <path d="M289.464,256.864c-4.425-0.848-8.908-1.531-13.442-2.044c-3.803-0.43-7.12,2.592-7.12,6.42v45.738 c0,7.409-6.245,13.359-13.759,12.873c-6.857-0.444-12.043-6.444-12.043-13.315v-45.297c0-3.828-3.318-6.849-7.12-6.42 c-4.533,0.512-9.017,1.196-13.442,2.044c-3.042,0.583-5.24,3.248-5.24,6.346v147.228c0,3.562,2.889,6.451,6.451,6.451h64.506 c3.562,0,6.451-2.889,6.451-6.451V263.21C294.705,260.113,292.506,257.448,289.464,256.864z"></path> <path d="M182.371,269.691c-61.274,28.032-103.952,89.916-103.952,161.584v61.376c0,10.687,8.664,19.352,19.352,19.352h87.275 c3.562,0,6.451-2.887,6.451-6.451V275.571C191.496,270.879,186.637,267.739,182.371,269.691z"></path> <path d="M329.632,269.689c-4.266-1.951-9.125,1.19-9.125,5.882v229.98c0,3.563,2.889,6.451,6.451,6.451h87.275 c10.687,0,19.352-8.664,19.352-19.352v-61.376C433.584,359.605,390.906,297.721,329.632,269.689z"></path> </g> </g> </g> </g></svg>
+            </div>
+            <h4 class="text-base font-semibold text-gray-300 mb-2 capitalize transition-all duration-500 ">Adicionar Garçon.</h4>
+            
+            <form method="POST">
+                {% csrf_token %}
+                <div class="mb-4">
+                    <label for="waiter_name" class="block text-xs mb-2 font-medium text-white">Nome do Garçom</label>
+                    <input type="text" id="waiter_name" name="waiter_name" class="mt-1 px-3 block w-full bg-gray-700 border border-gray-600 rounded-2xl text-white" required>
+                </div>
+                <div class="mb-4">
+                    <label for="waiter_username" class="block text-xs mb-2 font-medium text-white">Username</label>
+                    <input type="text" id="waiter_username" name="waiter_username" class="mt-1 px-3 block w-full bg-gray-700 border border-gray-600 rounded-2xl text-white" required>
+                </div>
+                <div class="mb-4">
+                    <label for="waiter_password" class="block text-xs mb-2 font-medium text-white">Senha</label>
+                    <input type="password" id="waiter_password" name="waiter_password" class="mt-1 px-3 block w-full bg-gray-700 border border-gray-600 rounded-2xl text-white" required>
+                </div>
+                <button type="submit" name="create_waiter" class="mt-2 group flex items-center gap-2 text-sm font-semibold text-white transition-all duration-500">Criar Garçon 
+                    <svg class="transition-all duration-500 group-hover:translate-x-1" width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M2.25 9L14.25 9M10.5 13.5L14.4697 9.53033C14.7197 9.28033 14.8447 9.15533 14.8447 9C14.8447 8.84467 14.7197 8.71967 14.4697 8.46967L10.5 4.5" stroke="#ffffff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"></path>
+                    </svg>
+                </button>
+            </form>
+            
+           
+          </div>
+      </div>
+
+      <!-- Criar Garçom -->
+      <div class="bg-gray-800 p-5 rounded-lg">
+        <div class="grid grid-cols-1 md:grid-cols-1 gap-6 mb-3">
+          <div class="bg-gray-800 p-6 rounded-lg">
+            <div class="card">
+              <h2 class="text-xl font-semibold mb-4 text-gray-200">Minhas Mesas</h2>
+              <div class="card-body ">
+                <div class="row">
+                  <div class="col-8">
+                    <div class="numbers">
+                      <h5 class="font-weight-bolder mb-0 text-3xl text-3xl text-white font-bold">
+                        Total: {{tables_total}}
+                        
+                      </h5>
+                    </div>
+                  </div>
+                  <div class="col-4 text-end">
+                    <div class="icon icon-shape bg-gradient-primary shadow text-center border-radius-md">
+                      <i class="fa-solid fa-wallet" style="color: #ffffff;"></i>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+             
+          </div>
+          <div class="bg-red-600 p-3 rounded-lg shadow-md">
+            <h2 class="text-xl font-bold mb-4 text-white ms-2">+ Configurações</h2>
+            <ul class="w-full flex flex-col">
+              {% for waiter in waiters %}
+                  <li class="p-4 w-full flex justify-between items-center">
+                      <!-- Alinha o nome do garçom e o username à esquerda -->
+                      <div class="flex-1 text-gray-200 border-b border-gray-400">
+                          <p class="text-white">Nome: {{ waiter.name }}</p>
+                          <p class="text-white mb-2">Login: {{ waiter.user.username }}</p>
+                          
+                      </div>
+                      <!-- Alinha os botões à direita -->
+                      <form method="POST" class="flex space-x-2">
+                          {% csrf_token %}
+                          <input type="hidden" name="waiter_id" value="{{ waiter.id }}">
+                          
+                          <button type="submit" name="delete_waiter" class="text-gray-300">Excluir</button>
+                      </form>
+                  </li>
+              {% empty %}
+                  <li class="p-4 bg-gray-800 w-full text-center text-white rounded-2xl">Nenhum garçom encontrado.</li>
+              {% endfor %}
+          </ul>
+          
+          
+
+            <div class="relative rounded-2xl p-4 transition-all duration-500 col-span-12">
+              <h4 class="text-base font-semibold text-gray-200 mb-2 capitalize transition-all duration-500 ">Meu Delivery</h4>
+              <p class="text-sm font-normal text-white transition-all duration-500 leading-5 mb-4"> Configure a taxa de entrega por KM, ex: R$ 2,00 a cada 1KM. </p>
+              <form method="post">
+                {% csrf_token %}
+                <div>
+                    <label for="delivery_rate_per_km" class="block text-gray-100 mb-2">Taxa de Entrega por KM</label>
+                    <input type="text" name="delivery_rate_per_km" value="{{ restaurant.delivery_rate_per_km }}" class="px-4 py-1 border border-gray-600 rounded-2xl bg-gray-800 text-gray-200 w-40" required>
+                </div>
+                <button type="submit" name="update_tax" class="mt-3 group flex items-center gap-2 text-sm font-semibold text-white transition-all duration-500">
+                    Atualizar Taxa de Entrega
+                    <svg class="transition-all duration-500 group-hover:translate-x-1" width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M2.25 9L14.25 9M10.5 13.5L14.4697 9.53033C14.7197 9.28033 14.8447 9.15533 14.8447 9C14.8447 8.84467 14.7197 8.71967 14.4697 8.46967L10.5 4.5" stroke="#ffffff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"></path>
+                    </svg>
+                </button>
+            </form>
+ 
+             
+            </div>
+          </div>
+         
+          <div class="w-full max-w-[20rem]">
+            <h2 class="text-white mb-2">Meu Link Delivery</h2>
+            <div class="relative">
+                <label for="npm-install-copy-button" class="sr-only">Label</label>
+                <input id="npm-install-copy-button" type="text" class="col-span-6 bg-gray-50 border border-gray-300 text-gray-500 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500" value="{{restaurant.get_restaurant_url}}" disabled readonly>
+                <button data-copy-to-clipboard-target="npm-install-copy-button" data-tooltip-target="tooltip-copy-npm-install-copy-button" class="absolute end-2 top-1/2 -translate-y-1/2 text-gray-500 dark:text-gray-400 dark:bg-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg p-2 inline-flex items-center justify-center">
+                    <span id="default-icon">
+                        <svg class="w-3.5 h-3.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 18 20">
+                            <path d="M16 1h-3.278A1.992 1.992 0 0 0 11 0H7a1.993 1.993 0 0 0-1.722 1H2a2 2 0 0 0-2 2v15a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V3a2 2 0 0 0-2-2Zm-3 14H5a1 1 0 0 1 0-2h8a1 1 0 0 1 0 2Zm0-4H5a1 1 0 0 1 0-2h8a1 1 0 1 1 0 2Zm0-5H5a1 1 0 0 1 0-2h2V2h4v2h2a1 1 0 1 1 0 2Z"/>
+                        </svg>
+                    </span>
+                    <span id="success-icon" class="hidden inline-flex items-center">
+                        <svg class="w-3.5 h-3.5 text-blue-700 dark:text-blue-500" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 16 12">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5.917 5.724 10.5 15 1.5"/>
+                        </svg>
+                    </span>
+                </button>
+                <div id="tooltip-copy-npm-install-copy-button" role="tooltip" class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 bg-gray-900 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700">
+                    <span id="default-tooltip-message">Copiar Link</span>
+                    <span id="success-tooltip-message" class="hidden">Copiado!</span>
+                    <div class="tooltip-arrow" data-popper-arrow></div>
+                </div>
+            </div>
+          </div>
+          
+
+<p class="flex items-center text-sm text-gray-500 dark:text-gray-400">Copie seu link de delivery e compartilhe com seus clientes.<button data-popover-target="popover-description" data-popover-placement="bottom-end" type="button"><svg class="w-4 h-4 ms-2 text-gray-400 hover:text-gray-500" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-8-3a1 1 0 00-.867.5 1 1 0 11-1.731-1A3 3 0 0113 8a3.001 3.001 0 01-2 2.83V11a1 1 0 11-2 0v-1a1 1 0 011-1 1 1 0 100-2zm0 8a1 1 0 100-2 1 1 0 000 2z" clip-rule="evenodd"></path></svg><span class="sr-only">Show information</span></button></p>
+<div data-popover id="popover-description" role="tooltip" class="absolute z-10 invisible inline-block text-sm text-gray-500 transition-opacity duration-300 bg-white border border-gray-200 rounded-lg shadow-sm opacity-0 w-72 dark:bg-gray-800 dark:border-gray-600 dark:text-gray-400">
+    <div class="p-3 space-y-2">
+        <h3 class="font-semibold text-gray-900 dark:text-white">Link Delivery</h3>
+        <p>O link delivery serve para você compartilhar seu cardápio com seus clientes, todos os pedidos via delivery são realizados por este link.</p>
+       
+    </div>
+    <div data-popper-arrow></div>
+</div>
+
+
+      </div>
+  </div>
+ 
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const printerSelect = document.getElementById('printerSelect');
+        const printButton = document.getElementById('printButton');
+        const savePrinterButton = document.getElementById('savePrinterButton');
+        const messageDiv = document.getElementById('message');
+    
+        function fetchPrinters() {
+            fetch('/impressoras/')
+                .then(response => response.json())
+                .then(data => {
+                    printerSelect.innerHTML = '';
+                    if (data.printers && data.printers.length > 0) {
+                        data.printers.forEach(printer => {
+                            const option = document.createElement('option');
+                            option.value = printer;
+                            option.textContent = printer;
+                            printerSelect.appendChild(option);
+                        });
+                    } else {
+                        const option = document.createElement('option');
+                        option.value = '';
+                        option.textContent = 'Nenhuma impressora disponível';
+                        printerSelect.appendChild(option);
+                    }
+                })
+                .catch(error => {
+                    messageDiv.textContent = 'Erro ao carregar impressoras';
+                    console.error('Erro:', error);
+                });
+        }
+    
+        fetchPrinters();
+    
+        
+    
+        savePrinterButton.addEventListener('click', function(event) {
+            event.preventDefault();  
+            const selectedPrinter = printerSelect.value;
+            console.log('Selected printer:', selectedPrinter);  
+            if (selectedPrinter) {
+                saveSelectedPrinter(selectedPrinter);
+            } else {
+                messageDiv.textContent = 'Selecione uma impressora.';
+            }
+        });
+        
+    
+        function saveSelectedPrinter(printerName) {
+            fetch('/impressora/default/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': getCsrfToken()  // Inclua o token aqui
+                },
+                body: JSON.stringify({ printer_name: printerName })
+            })
+            
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    alert('Impressora padrão definida com sucesso');
+                } else {
+                    alert('Erro ao definir impressora padrão');
+                }
+            })
+            .catch(error => {
+                console.error('Erro:', error);
+                alert('Erro ao salvar impressora padrão');
+            });
+        }
+    
+        function getCsrfToken() {
+            const csrfToken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+            return csrfToken;
+        }
+    
+        function getCookie(name) {
+            let cookieValue = null;
+            if (document.cookie && document.cookie !== '') {
+                const cookies = document.cookie.split(';');
+                for (let i = 0; i < cookies.length; i++) {
+                    const cookie = cookies[i].trim();
+                    if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                        break;
+                    }
+                }
+            }
+            return cookieValue;
+        }
+    });
+    
+</script>
+ 
+</div>
+ <!-- Deletar Conta -->
+ <div class="bg-gray-900 p-6 rounded-lg">
+  <form method="post">
+      {% csrf_token %}
+      <button type="submit" name="delete_account" class="text-gray-600 hover:text-red-600">Excluir Conta</button>
+  </form>
+</div>
+
+{% endblock%}

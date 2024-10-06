@@ -1,0 +1,306 @@
+{% extends 'index.html' %} {% load static %} {% block content %}
+
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+  
+    <div class="bg-red-600 rounded-xl p-6">
+        <div class="relative overflow-hidden min-h-32 text-center bg-no-repeat bg-center">
+            <!-- Close Button -->
+           
+            <!-- End Close Button -->
+
+         
+        </div>
+
+        <div class="relative z-10 -mt-12">
+            <!-- Icon -->
+            <span class="mx-auto flex justify-center items-center size-[62px] rounded-full border border-gray-200 bg-white text-gray-700 shadow-sm dark:bg-neutral-800 dark:border-neutral-700 dark:text-neutral-400">
+                  <svg class="size-6" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                    <path d="M1.92.506a.5.5 0 0 1 .434.14L3 1.293l.646-.647a.5.5 0 0 1 .708 0L5 1.293l.646-.647a.5.5 0 0 1 .708 0L7 1.293l.646-.647a.5.5 0 0 1 .708 0L9 1.293l.646-.647a.5.5 0 0 1 .708 0l.646.647.646-.647a.5.5 0 0 1 .708 0l.646.647.646-.647a.5.5 0 0 1 .801.13l.5 1A.5.5 0 0 1 15 2v12a.5.5 0 0 1-.053.224l-.5 1a.5.5 0 0 1-.8.13L13 14.707l-.646.647a.5.5 0 0 1-.708 0L11 14.707l-.646.647a.5.5 0 0 1-.708 0L9 14.707l-.646.647a.5.5 0 0 1-.708 0L7 14.707l-.646.647a.5.5 0 0 1-.708 0L5 14.707l-.646.647a.5.5 0 0 1-.708 0L3 14.707l-.646.647a.5.5 0 0 1-.801-.13l-.5-1A.5.5 0 0 1 1 14V2a.5.5 0 0 1 .053-.224l.5-1a.5.5 0 0 1 .367-.27zm.217 1.338L2 2.118v11.764l.137.274.51-.51a.5.5 0 0 1 .707 0l.646.647.646-.646a.5.5 0 0 1 .708 0l.646.646.646-.646a.5.5 0 0 1 .708 0l.646.646.646-.646a.5.5 0 0 1 .708 0l.646.646.646-.646a.5.5 0 0 1 .708 0l.646.646.646-.646a.5.5 0 0 1 .708 0l.509.509.137-.274V2.118l-.137-.274-.51.51a.5.5 0 0 1-.707 0L12 1.707l-.646.647a.5.5 0 0 1-.708 0L10 1.707l-.646.647a.5.5 0 0 1-.708 0L8 1.707l-.646.647a.5.5 0 0 1-.708 0L6 1.707l-.646.647a.5.5 0 0 1-.708 0L4 1.707l-.646.647a.5.5 0 0 1-.708 0l-.509-.51z"/>
+                    <path d="M3 4.5a.5.5 0 0 1 .5-.5h6a.5.5 0 1 1 0 1h-6a.5.5 0 0 1-.5-.5zm0 2a.5.5 0 0 1 .5-.5h6a.5.5 0 1 1 0 1h-6a.5.5 0 0 1-.5-.5zm0 2a.5.5 0 0 1 .5-.5h6a.5.5 0 1 1 0 1h-6a.5.5 0 0 1-.5-.5zm0 2a.5.5 0 0 1 .5-.5h6a.5.5 0 0 1 0 1h-6a.5.5 0 0 1-.5-.5zm8-6a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 0 1h-1a.5.5 0 0 1-.5-.5zm0 2a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 0 1h-1a.5.5 0 0 1-.5-.5zm0 2a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 0 1h-1a.5.5 0 0 1-.5-.5zm0 2a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 0 1h-1a.5.5 0 0 1-.5-.5z"/>
+                  </svg>
+                </span>
+            <!-- End Icon -->
+        </div>
+
+        <!-- Body -->
+        <div class="p-4 sm:p-7 overflow-y-auto">
+            <div class="text-center">
+                <h3 id="hs-ai-offcanvas-label" class="text-lg font-semibold text-gray-800 dark:text-neutral-200">
+                    Forma de Pagamento
+                  </h3>
+                <p class="text-sm text-gray-500 dark:text-gray-300">
+                    Fatura #{{plan.subscription_id}}
+                    
+                </p>
+            </div>
+
+            <!-- Grid -->
+            <div class="mt-5 sm:mt-10 grid grid-cols-2 sm:grid-cols-3 gap-5">
+                <div>
+                    <span class="block text-xs uppercase text-gray-500 dark:text-gray-200">Valor Plano:</span>
+                    <span class="block text-sm font-medium text-gray-800 dark:text-neutral-200">{{plan.subscription_price}}</span>
+                </div>
+                <!-- End Col -->
+
+                <div>
+                    <span class="block text-xs uppercase text-gray-500 dark:text-gray-200">Vencimento:</span>
+                    <span class="block text-sm font-medium text-gray-800 dark:text-neutral-200">{{ plan.next_billing_date|date:"d/m/Y" }}</span>
+                </div>
+                <!-- End Col -->
+
+                <div>
+                    <span class="block text-xs uppercase text-gray-500 dark:text-gray-200">Método Pagamento:</span>
+                    <div class="flex items-center gap-x-2 mt-2">
+                      {% if plan.method_payment == 'card'%}
+                        <svg class="size-5" width="400" height="248" viewBox="0 0 400 248" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <g clip-path="url(#clip0)">
+                                <path d="M254 220.8H146V26.4H254V220.8Z" fill="#FF5F00" />
+                                <path d="M152.8 123.6C152.8 84.2 171.2 49 200 26.4C178.2 9.2 151.4 0 123.6 0C55.4 0 0 55.4 0 123.6C0 191.8 55.4 247.2 123.6 247.2C151.4 247.2 178.2 238 200 220.8C171.2 198.2 152.8 163 152.8 123.6Z" fill="#EB001B" />
+                                <path d="M400 123.6C400 191.8 344.6 247.2 276.4 247.2C248.6 247.2 221.8 238 200 220.8C228.8 198.2 247.2 163 247.2 12f3.6C247.2 84.2 228.8 49 200 26.4C221.8 9.2 248.6 0 276.4 0C344.6 0 400 55.4 400 123.6Z" fill="#F79E1B" />
+                            </g>
+                            <defs>
+                                <clipPath id="clip0">
+                                    <rect width="400" height="247.2" fill="white" />
+                                </clipPath>
+                            </defs>
+                        </svg>
+                        <span class="block text-sm font-medium text-gray-800 dark:text-neutral-200">•••• 4242</span>
+                        {% else %}
+                        <svg fill="#26e3aa" class="size-5" width="400" height="248"  viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg" stroke="#26e3aa" stroke-width="0.00016"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"><path d="M11.917 11.71a2.046 2.046 0 0 1-1.454-.602l-2.1-2.1a.4.4 0 0 0-.551 0l-2.108 2.108a2.044 2.044 0 0 1-1.454.602h-.414l2.66 2.66c.83.83 2.177.83 3.007 0l2.667-2.668h-.253zM4.25 4.282c.55 0 1.066.214 1.454.602l2.108 2.108a.39.39 0 0 0 .552 0l2.1-2.1a2.044 2.044 0 0 1 1.453-.602h.253L9.503 1.623a2.127 2.127 0 0 0-3.007 0l-2.66 2.66h.414z"></path><path d="m14.377 6.496-1.612-1.612a.307.307 0 0 1-.114.023h-.733c-.379 0-.75.154-1.017.422l-2.1 2.1a1.005 1.005 0 0 1-1.425 0L5.268 5.32a1.448 1.448 0 0 0-1.018-.422h-.9a.306.306 0 0 1-.109-.021L1.623 6.496c-.83.83-.83 2.177 0 3.008l1.618 1.618a.305.305 0 0 1 .108-.022h.901c.38 0 .75-.153 1.018-.421L7.375 8.57a1.034 1.034 0 0 1 1.426 0l2.1 2.1c.267.268.638.421 1.017.421h.733c.04 0 .079.01.114.024l1.612-1.612c.83-.83.83-2.178 0-3.008z"></path></g></svg>
+                       
+                      <span class="block text-sm font-medium text-gray-800 dark:text-neutral-200">Pix</span>
+                      {% endif %}
+                    </div>
+                </div>
+                <!-- End Col -->
+            </div>
+            <!-- End Grid -->
+
+            <div class="mt-5 sm:mt-10">
+                <h4 class="text-xs font-semibold uppercase text-gray-800 dark:text-neutral-200">Resumo</h4>
+
+                <ul class="mt-3 flex flex-col">
+                    <li class="inline-flex items-center gap-x-2 py-3 px-4 text-sm border text-gray-800 -mt-px first:rounded-t-lg first:mt-0 last:rounded-b-lg dark:border-neutral-700 dark:text-neutral-200">
+                        <div class="flex items-center justify-between w-full">
+                            <span>Pagamento Fatura</span>
+                            <span>R$ {{plan.subscription_price}}</span>
+                        </div>
+                    </li>
+                    <li class="inline-flex items-center gap-x-2 py-3 px-4 text-sm border text-gray-800 -mt-px first:rounded-t-lg first:mt-0 last:rounded-b-lg dark:border-neutral-700 dark:text-neutral-200">
+                        <div class="flex items-center justify-between w-full">
+                            <span>Impostos</span>
+                            <span>R$ 0,00</span>
+                        </div>
+                    </li>
+                    <li class="inline-flex items-center gap-x-2 py-3 px-4 text-sm font-semibold bg-gray-50 border text-gray-800 -mt-px first:rounded-t-lg first:mt-0 last:rounded-b-lg dark:bg-neutral-800 dark:border-neutral-700 dark:text-neutral-200">
+                        <div class="flex items-center justify-between w-full">
+                            <span>Total</span>
+                            <span>R$ {{plan.subscription_price}}</span>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Button -->
+            <div class="mt-5 flex justify-end gap-x-2">
+                <a class="py-2 px-3 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-gray-200 bg-white text-gray-800 shadow-sm hover:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none focus:outline-none focus:bg-gray-50 dark:bg-transparent dark:border-neutral-700 dark:text-neutral-300 dark:hover:bg-neutral-800 dark:focus:bg-neutral-800"
+                href="#">
+                    <svg fill="#ffffff" class="shrink-0 size-4" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" stroke="#ffffff">
+                        <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                        <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+                        <g id="SVGRepo_iconCarrier">
+                            <g data-name="39 live chat" id="_39_live_chat">
+                                <path d="M53.72,11.02H28.65c-3.74,0-6.78,2.5-6.78,5.57v2.39H9.73c-3.44,0-6.23,2.3-6.23,5.13V39.93c0,2.83,2.79,5.13,6.23,5.13h2.42l8.21,7.65a.977.977,0,0,0,.68.27.953.953,0,0,0,.4-.08,1.011,1.011,0,0,0,.6-.92V45.06H32.35c3.44,0,6.23-2.3,6.23-5.13V39.7h1.6v7.76a1,1,0,0,0,.61.92.881.881,0,0,0,.39.08,1.039,1.039,0,0,0,.69-.26L51,39.7h2.72c3.74,0,6.78-2.5,6.78-5.58V16.59C60.5,13.52,57.46,11.02,53.72,11.02ZM36.58,39.93c0,1.7-1.94,3.13-4.23,3.13H21.04a1,1,0,0,0-1,1v5.62l-6.82-6.35a1,1,0,0,0-.68-.27H9.73c-2.33,0-4.23-1.4-4.23-3.13V24.11c0-1.72,1.9-3.13,4.23-3.13H21.87V34.12c0,3.08,3.04,5.58,6.78,5.58h7.93ZM58.5,34.12c0,1.97-2.15,3.58-4.78,3.58H50.6a1.014,1.014,0,0,0-.68.26l-7.74,7.21V38.7a.99.99,0,0,0-1-1H28.65c-2.63,0-4.78-1.61-4.78-3.58V16.59c0-1.97,2.15-3.57,4.78-3.57H53.72c2.63,0,4.78,1.6,4.78,3.57Z"></path>
+                                <path d="M31.11,21.44a3.745,3.745,0,1,0,3.75,3.75A3.751,3.751,0,0,0,31.11,21.44Zm0,5.49a1.745,1.745,0,1,1,1.75-1.74A1.75,1.75,0,0,1,31.11,26.93Z"></path>
+                                <path d="M41.18,21.44a3.745,3.745,0,1,0,3.75,3.75A3.749,3.749,0,0,0,41.18,21.44Zm0,5.49a1.745,1.745,0,1,1,1.75-1.74A1.741,1.741,0,0,1,41.18,26.93Z"></path>
+                                <path d="M51.26,21.44a3.745,3.745,0,1,0,3.75,3.75A3.751,3.751,0,0,0,51.26,21.44Zm0,5.49a1.745,1.745,0,1,1,1.75-1.74A1.743,1.743,0,0,1,51.26,26.93Z"></path>
+                            </g>
+                        </g>
+                    </svg>
+                    Suporte
+                </a>
+                {% if plan.status == 'desactive'%}
+                <a class="py-2 px-3 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-transparent bg-white text-gray-700 hover:bg-gray-700 hover:text-white focus:outline-none focus:bg-blue-700 disabled:opacity-50 disabled:pointer-events-none" href="#">
+                    <svg class="shrink-0 size-4" viewBox="0 0 48.00 48.00" xmlns="http://www.w3.org/2000/svg" fill="#000000" stroke="#000000" stroke-width="0.00048000000000000007">
+                        <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                        <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+                        <g id="SVGRepo_iconCarrier">
+                            <path d="M0 0h48v48H0z" fill="none"></path>
+                            <g id="Shopicon">
+                                <path d="M25.662,19.651C26.402,19.877,27.187,20,28,20c4.418,0,8-3.582,8-8s-3.582-8-8-8c-2.212,0-4.214,0.898-5.662,2.349 C21.598,6.123,20.814,6,20,6c-4.418,0-8,3.582-8,8s3.582,8,8,8C22.212,22,24.214,21.102,25.662,19.651z M28,8c2.206,0,4,1.794,4,4 s-1.794,4-4,4c-2.206,0-4-1.794-4-4S25.795,8,28,8z M16,14c0-2.206,1.794-4,4-4c0.088,0,0.169,0.02,0.256,0.026 C20.095,10.658,20,11.317,20,12c0,2.079,0.8,3.967,2.1,5.389C21.488,17.77,20.773,18,20,18C17.795,18,16,16.206,16,14z"></path>
+                                <path d="M30,24c-5.952,0-10.813,1.913-12.9,4.777c-1.05-0.914-1.862-1.813-2.3-2.379c-1.986-2.643-5.754-3.181-8.4-1.198 c-2.646,1.984-3.185,5.753-1.199,8.4C5.519,34.025,13.131,44,24,44h20V32C44,27.439,37.981,24,30,24z M8.4,31.2 c-0.662-0.882-0.482-2.139,0.397-2.8c0.36-0.27,0.783-0.399,1.201-0.399c0.608,0,1.207,0.274,1.596,0.791 C11.647,28.864,17.026,36,24,36h8v-2l0,0v-2h-8c-1.229,0-2.46-0.385-3.61-0.962C21.518,29.573,25.025,28,30,28 c6.104,0,10,2.369,10,4v8h-2H24C15.107,40,8.669,31.559,8.4,31.2z"></path>
+                            </g>
+                        </g>
+                    </svg>
+                    Pagar
+                </a>
+                {% else %}
+                
+                {% endif %}
+
+            </div>
+            <!-- End Buttons -->
+
+
+        </div>
+
+    </div>
+
+    <div class="sm:w-11/12 mx-auto lg:w-full">
+        <!-- Card -->
+        <div class="flex flex-col p-6 sm:p-10 bg-white shadow-md rounded-xl dark:bg-neutral-800 h-full">
+            <!-- Grid -->
+            <div class="flex justify-between">
+                <div>
+                    <img src="{% static 'images/logo/logo.png'%}" alt="" width="130px">
+
+                </div>
+                <!-- Col -->
+
+                <div class="text-end">
+                    <h2 class="text-2xl md:text-3xl font-semibold text-gray-800 dark:text-neutral-200">Minha fatura #</h2>
+                    <span class="mt-1 block text-gray-500 dark:text-neutral-500">{{plan.subscription_id}}
+                    </span>
+
+                    <address class="mt-4 not-italic text-gray-800 dark:text-neutral-200">
+              {{restaurant.address}}<br>
+              {{ restaurant.cep|slice:":5" }}-{{ restaurant.cep|slice:"5:" }}
+
+
+            
+            </address>
+                </div>
+                <!-- Col -->
+            </div>
+            <!-- End Grid -->
+
+            <!-- Grid -->
+            <div class="mt-8 grid sm:grid-cols-2 gap-3">
+                <div>
+                    <h3 class="text-lg font-semibold text-gray-800 dark:text-neutral-200">{{restaurant.name}}</h3>
+                    <address class="mt-2 not-italic text-gray-500 dark:text-neutral-500">
+                    {{ restaurant.cnpj|slice:":2" }}.{{ restaurant.cnpj|slice:"2:5" }}.{{ restaurant.cnpj|slice:"5:8" }}/{{ restaurant.cnpj|slice:"8:12" }}-{{ restaurant.cnpj|slice:"12:" }}<br>
+                    {{ restaurant.cpf|slice:":3" }}.{{ restaurant.cpf|slice:"3:6" }}.{{ restaurant.cpf|slice:"6:9" }}-{{ restaurant.cpf|slice:"9:11" }}<br>
+
+
+              Brasil<br>
+        
+            </address>
+                </div>
+                <!-- Col -->
+
+                <div class="sm:text-end space-y-2">
+                    <!-- Grid -->
+                    <div class="grid grid-cols-2 sm:grid-cols-1 gap-3 sm:gap-2">
+                        <dl class="grid sm:grid-cols-5 gap-x-3">
+                            <dt class="col-span-3 font-semibold text-gray-800 dark:text-neutral-200">Data Plano:</dt>
+                            <dd class="col-span-2 text-gray-500 dark:text-neutral-500">{{ plan.start_date|date:"d/m/Y" }}</dd>
+                        </dl>
+                        <dl class="grid sm:grid-cols-5 gap-x-3">
+                            <dt class="col-span-3 font-semibold text-gray-800 dark:text-neutral-200">Vencimento Fatura:</dt>
+                            <dd class="col-span-2 text-gray-500 dark:text-neutral-500">Todo dia: {{ plan.start_date|date:"d"}}</dd>
+                        </dl>
+                    </div>
+                    <!-- End Grid -->
+                </div>
+                <!-- Col -->
+            </div>
+            <!-- End Grid -->
+
+            <!-- Table -->
+            <div class="mt-6">
+                <div class="border border-gray-200 p-4 rounded-lg space-y-4 dark:border-neutral-700">
+                    <div class="hidden sm:grid sm:grid-cols-5">
+                        <div class="sm:col-span-2 text-xs font-medium text-gray-500 uppercase dark:text-neutral-500">Item</div>
+                        <div class="text-start text-xs font-medium text-gray-500 uppercase dark:text-neutral-500">Qty</div>
+                        <div class="text-start text-xs font-medium text-gray-500 uppercase dark:text-neutral-500">Rate</div>
+                        <div class="text-end text-xs font-medium text-gray-500 uppercase dark:text-neutral-500">Valor</div>
+                    </div>
+
+                    <div class="hidden sm:block border-b border-gray-200 dark:border-neutral-700"></div>
+
+                    <div class="grid grid-cols-3 sm:grid-cols-5 gap-2">
+                        <div class="col-span-full sm:col-span-2">
+                            <h5 class="sm:hidden text-xs font-medium text-gray-500 uppercase dark:text-neutral-500">Item</h5>
+                            <p class="font-medium text-gray-800 dark:text-neutral-200">Plano {{ plan.get_plan_name_display }}</p>
+                        </div>
+                        <div>
+                            <h5 class="sm:hidden text-xs font-medium text-gray-500 uppercase dark:text-neutral-500">Qty</h5>
+                            <p class="text-gray-800 dark:text-neutral-200">1</p>
+                        </div>
+                        <div>
+                            <h5 class="sm:hidden text-xs font-medium text-gray-500 uppercase dark:text-neutral-500">Status</h5>
+                            {% if plan.status == 'active' %}
+                            <span class="inline-flex items-center bg-green-100 text-green-800 text-xs font-medium px-3.5 py-1 rounded-full dark:bg-green-900 dark:text-green-300">
+                                <span class="w-2 h-2 me-1 bg-green-500 rounded-full"></span>
+                                Ativo
+                            </span>
+                            {% elif plan.status == 'pending' %}
+                            <span class="inline-flex items-center bg-yellow-100 text-yellow-800 text-xs font-medium px-4 py-1 rounded-full dark:bg-yellow-900 dark:text-yellow-300">
+                                <span class="w-2 h-2 me-1 bg-yellow-500 rounded-full"></span>
+                                 Pendente
+                            </span>
+                            {% else %}
+                            <span class="inline-flex items-center bg-red-100 text-red-800 text-xs font-medium px-3.5 py-1 rounded-full dark:bg-red-900 dark:text-red-300">
+                                <span class="w-2 h-2 me-1 bg-red-500 rounded-full"></span>
+                                Desativado
+                            </span>
+    
+                            {% endif %}
+
+                        </div>
+                        <div>
+                            <h5 class="sm:hidden text-xs font-medium text-gray-500 uppercase dark:text-neutral-500">Amount</h5>
+                            <p class="sm:text-end text-gray-800 dark:text-neutral-200">R$ {{plan.subscription_price}}</p>
+                        </div>
+                    </div>
+
+                   
+                </div>
+            </div>
+            <!-- End Table -->
+
+
+
+            <div class="mt-8 sm:mt-12">
+                <h4 class="text-lg font-semibold text-gray-800 dark:text-neutral-200">Agradecemos por ter nos ecolhido!</h4>
+                <p class="text-gray-500 dark:text-neutral-500">Se você tiver alguma dúvida sobre esta fatura, use as seguintes informações de contato:</p>
+                <div class="mt-2">
+                    <p class="block text-sm font-medium text-gray-800 dark:text-neutral-200">suporte@upmenu.com.br</p>
+                    <a href="https://wa.me/55993272905" class="block text-sm font-medium text-gray-800 dark:text-neutral-200 mt-3">Suporte pelo Whatsapp</a>
+                </div>
+            </div>
+
+            <p class="mt-5 text-sm text-gray-500 dark:text-neutral-500">© 2024 upMenu.</p>
+        </div>
+    </div>
+    <div class="h-20 w-full">
+     
+    
+    </div>
+    
+</div>
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+
+
+{% endblock %}

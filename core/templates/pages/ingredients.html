@@ -1,0 +1,60 @@
+{% extends 'index.html' %}
+
+<head>
+    <script src="https://cdn.jsdelivr.net/npm/tailgrids@2.2.2/plugin.min.js"></script>
+<link
+  href="https://cdn.jsdelivr.net/npm/tailgrids@2.2.2/assets/css/tailwind.min.css"
+  rel="stylesheet"
+/>
+</head>
+
+{% block content %}
+
+<div class="flex items-center p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
+    <svg class="flex-shrink-0 inline w-4 h-4 me-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+      <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z"/>
+    </svg>
+    <span class="sr-only">Info</span>
+    <div>
+      <span class="font-medium">Atenção!</span> Ao clicar no botão 'x' você removerá o ingrediente do menu.
+    </div>
+  </div>
+<div class="bg-gray-800 rounded-lg p-5">
+    <div class="flex justify-between w-full mb-4 text-white">
+        <div>
+            <p>Nome</p>
+        </div>
+        
+    </div>
+    
+    {% for ingredient in ingredients %}
+    <ul class="space-y-3">
+        <li class="flex mb-4 items-center justify-between">
+            <div class="flex items-center">
+              <!-- Formulário para deletar o ingrediente -->
+              <form action="{% url 'delete_ingredients' ingredient.id %}" method="post">  
+                {% csrf_token %}
+                <span class="mr-2.5 flex items-center">
+                  <button class="text-red-600 hover:text-red-800" type="submit">
+                    <svg width="20" height="20" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" class="fill-current">
+                      <!-- Ícone de exclusão -->
+                      <path d="M10 0.5625C4.78125 0.5625 0.5625 4.78125 0.5625 10C0.5625 15.2188 4.78125 19.4688 10 19.4688C15.2188 19.4688 19.4688 15.2188 19.4688 10C19.4688 4.78125 15.2188 0.5625 10 0.5625ZM10 18.0625C5.5625 18.0625 1.96875 14.4375 1.96875 10C1.96875 5.5625 5.5625 1.96875 10 1.96875C14.4375 1.96875 18.0625 5.59375 18.0625 10.0312C18.0625 14.4375 14.4375 18.0625 10 18.0625Z"/>
+                      <path d="M12.875 7.09375C12.5938 6.8125 12.1563 6.8125 11.875 7.09375L10 9L8.09375 7.09375C7.8125 6.8125 7.375 6.8125 7.09375 7.09375C6.8125 7.375 6.8125 7.8125 7.09375 8.09375L9 10L7.09375 11.9062C6.8125 12.1875 6.8125 12.625 7.09375 12.9062C7.21875 13.0312 7.40625 13.125 7.59375 13.125C7.78125 13.125 7.96875 13.0625 8.09375 12.9062L10 11L11.9062 12.9062C12.0312 13.0312 12.2188 13.125 12.4063 13.125C12.5938 13.125 12.7812 13.0625 12.9062 12.9062C13.1875 12.625 13.1875 12.1875 12.9062 11.9062L11 10L12.9062 8.09375C13.1875 7.8125 13.1875 7.375 12.9062 7.09375C12.625 6.8125 12.1875 6.8125 11.9062 7.09375L10 9L12.875 7.09375Z"/>
+                    </svg>
+                  </button>
+                </span>
+              </form>
+              <!-- Nome do Ingrediente -->
+              <span class="text-white font-bold">{{ ingredient.name }}</span>
+            </div>
+          
+           
+          </li>
+          
+     </ul>
+    
+    {% endfor %}
+</div>
+
+
+{% endblock %}
